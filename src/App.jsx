@@ -467,6 +467,16 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
     blessed: 'from-teal-900/90 via-emerald-900/85 to-cyan-950/90 border-teal-300/70',
   };
 
+  const themeImages = {
+    cursed: `${import.meta.env.BASE_URL}art/cursed.jpg`,
+    fertile: `${import.meta.env.BASE_URL}art/fertile.jpg`,
+    forest: `${import.meta.env.BASE_URL}art/forest.jpg`,
+    beast: `${import.meta.env.BASE_URL}art/beast.jpg`,
+    guardian: `${import.meta.env.BASE_URL}art/guardian.jpg`,
+    celestial: `${import.meta.env.BASE_URL}art/celestial.jpg`,
+    blessed: `${import.meta.env.BASE_URL}art/fertile.jpg`,
+  };
+
   const posLabel = pos === 'TOP' ? 'T' : pos === 'MIDDLE' ? 'M' : 'B';
 
   if (!activeSlice) {
@@ -491,10 +501,23 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
   return (
     <div
       className={`relative h-full w-full px-2 py-1.5 flex flex-col justify-between border-b last:border-b-0 bg-gradient-to-r transition-all select-none overflow-hidden ${
-        themeClasses[activeSlice.artTheme]
+        themeClasses[activeSlice.artTheme] || themeClasses.forest
       } ${previewSlice ? 'ring-2 ring-emerald-400 brightness-125' : ''}`}
     >
-      <div className="flex items-center justify-between gap-1 z-10">
+      {/* THEMATIC CARD ARTWORK WATERMARK */}
+      {themeImages[activeSlice.artTheme] && (
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          <img
+            src={themeImages[activeSlice.artTheme]}
+            alt=""
+            className="w-full h-full object-cover opacity-25 mix-blend-luminosity scale-105"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/45 to-stone-950/75 pointer-events-none" />
+        </div>
+      )}
+
+      <div className="flex items-center justify-between gap-1 z-10 relative">
         <div className="flex items-center gap-1 min-w-0">
           <span className="text-[8px] font-mono px-1 rounded bg-black/40 text-stone-300">
             {posLabel}
@@ -1961,6 +1984,14 @@ export default function App() {
                   );
                   const canClaim = isHarvest && hasValeBuysLeft && hasSpirits;
 
+                  const valeImg = vale.cost?.GUARDIAN
+                    ? `${import.meta.env.BASE_URL}art/guardian.jpg`
+                    : vale.cost?.CELESTIAL
+                    ? `${import.meta.env.BASE_URL}art/celestial.jpg`
+                    : vale.cost?.BEAST
+                    ? `${import.meta.env.BASE_URL}art/beast.jpg`
+                    : `${import.meta.env.BASE_URL}art/fertile.jpg`;
+
                   let valeStyle = 'bg-stone-950/60 border-stone-800 opacity-80';
                   if (isHarvest) {
                     if (canClaim) {
@@ -1974,16 +2005,27 @@ export default function App() {
                     <div
                       key={vale.id}
                       onClick={() => handleClaimVale(vale)}
-                      className={`p-2.5 rounded-xl border flex flex-col justify-between gap-1.5 transition ${valeStyle}`}
+                      className={`relative p-2.5 rounded-xl border flex flex-col justify-between gap-1.5 transition overflow-hidden ${valeStyle}`}
                     >
-                      <div className="flex items-center justify-between">
+                      {/* VALE CARD BACKGROUND ARTWORK */}
+                      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                        <img
+                          src={valeImg}
+                          alt=""
+                          className="w-full h-full object-cover opacity-25 mix-blend-luminosity scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/45 to-stone-950/75 pointer-events-none" />
+                      </div>
+
+                      <div className="flex items-center justify-between relative z-10">
                         <span className="text-xs font-bold text-stone-100">{vale.name}</span>
                         <span className="px-1.5 py-0.5 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[10px] font-bold flex items-center gap-0.5">
                           <Trophy className="w-2.5 h-2.5" /> {vale.printedVP} VP
                         </span>
                       </div>
-                      <p className="text-[11px] text-emerald-300">{vale.description}</p>
-                      <div className="flex items-center justify-between mt-1 pt-1 border-t border-stone-800/80">
+                      <p className="text-[11px] text-emerald-300 relative z-10">{vale.description}</p>
+                      <div className="flex items-center justify-between mt-1 pt-1 border-t border-stone-800/80 relative z-10">
                         <div className="flex items-center gap-1">
                           {Object.entries(vale.cost).map(([sp, req]) =>
                             req ? <SpiritBadge key={sp} type={sp} count={req} /> : null
