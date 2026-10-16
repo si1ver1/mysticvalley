@@ -1492,10 +1492,10 @@ export default function App() {
       </div>
 
       {/* MAIN WORKSPACE */}
-      <main className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 p-3 sm:p-4 max-w-[1600px] w-full mx-auto">
+      <main className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 p-3 sm:p-4 max-w-[1850px] w-full mx-auto">
         {/* LEFT SECTION: YOUR FIELD & ON-DECK ZONE */}
         <section
-          className={`lg:col-span-7 flex flex-col gap-4 ${
+          className={`lg:col-span-7 xl:col-span-8 flex flex-col gap-4 ${
             mobileViewMode === 'MARKET' ? 'hidden lg:flex' : 'flex'
           }`}
         >
@@ -1540,47 +1540,86 @@ export default function App() {
             </div>
 
             {}
-            <div className={`flex flex-col md:flex-row items-start gap-3.5 ${humanPlayer.hasSpoiled ? 'animate-mv-spoil' : ''}`}>
-              {/* ON-DECK CARD ZONE */}
-              <div className="flex flex-col items-center shrink-0 w-full md:w-auto p-2 sm:p-2.5 rounded-xl bg-stone-950/40 border border-amber-500/20">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-1.5 flex items-center gap-1">
-                  <Eye className="w-3 h-3 text-amber-300" /> On-Deck Preview
-                </span>
-                {humanPlayer.onDeck ? (
-                  <div key={`ondeck_${humanPlayer.onDeck.sleeveId}_${onDeckAnimKey}`} className="relative w-full flex justify-center">
-                    <CardSleeveView
-                      sleeve={humanPlayer.onDeck}
-                      badgeText="ON-DECK"
-                      animationClass="animate-mv-flip"
-                    />
-                    {phase === 'HARVEST' && (
-                      <div className="absolute inset-0 bg-stone-950/65 backdrop-blur-[1px] rounded-xl flex items-center justify-center p-3 text-center">
-                        <span className="text-[11px] text-stone-300 font-medium">
-                          Stays on top of deck for next turn
-                        </span>
-                      </div>
+            <div className={`flex flex-col gap-4 ${humanPlayer.hasSpoiled ? 'animate-mv-spoil' : ''}`}>
+              {/* ON-DECK PREVIEW PANEL */}
+              <div className="bg-stone-950/60 border border-amber-500/30 rounded-xl p-3 flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                <div className="flex flex-col items-center shrink-0">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-1.5 flex items-center gap-1">
+                    <Eye className="w-3.5 h-3.5 text-amber-300" /> On-Deck Preview
+                  </span>
+                  {humanPlayer.onDeck ? (
+                    <div key={`ondeck_${humanPlayer.onDeck.sleeveId}_${onDeckAnimKey}`} className="relative">
+                      <CardSleeveView
+                        sleeve={humanPlayer.onDeck}
+                        badgeText="ON-DECK"
+                        compact
+                        animationClass="animate-mv-flip"
+                      />
+                      {phase === 'HARVEST' && (
+                        <div className="absolute inset-0 bg-stone-950/65 backdrop-blur-[1px] rounded-xl flex items-center justify-center p-3 text-center">
+                          <span className="text-[11px] text-stone-300 font-medium">
+                            Stays on top of deck for next turn
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="w-[140px] h-[190px] rounded-xl border-2 border-dashed border-stone-800 flex items-center justify-center text-xs text-stone-500 text-center p-3">
+                      Deck Empty
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex-1 flex flex-col justify-center text-center sm:text-left space-y-1.5 py-1">
+                  <div className="flex items-center justify-center sm:justify-start gap-2">
+                    <span className="text-xs font-bold text-amber-300 uppercase tracking-wider">
+                      Next Card Waiting on Deck
+                    </span>
+                    {humanPlayer.onDeck && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-200 font-semibold">
+                        Ready to Plant
+                      </span>
                     )}
                   </div>
-                ) : (
-                  <div className="w-[145px] sm:w-[175px] h-[215px] sm:h-[240px] rounded-xl border-2 border-dashed border-stone-800 flex items-center justify-center text-xs text-stone-500 text-center p-3">
-                    Deck Empty
-                  </div>
-                )}
+                  <p className="text-xs text-stone-300 leading-relaxed">
+                    This card's Mana, Decay, and Growth symbols already count toward your current turn tally.
+                  </p>
+                  {phase === 'PLANTING' && !humanPlayer.hasSpoiled && (
+                    <p className="text-xs text-emerald-400 font-semibold">
+                      Click <strong className="text-amber-300">"Push Luck (Plant On-Deck)"</strong> at top right to plant it into your Sanctuary and flip the next card!
+                    </p>
+                  )}
+                  {phase === 'HARVEST' && (
+                    <p className="text-xs text-stone-400">
+                      Harvesting Phase: Spend your Mana and Spirit symbols in the Market. This On-Deck card will remain on top of your deck for next turn.
+                    </p>
+                  )}
+                  {humanPlayer.hasSpoiled && (
+                    <p className="text-xs text-red-400 font-semibold">
+                      Turn Spoiled (4+ Net Decay)! End your turn to claim your consolation Mana token.
+                    </p>
+                  )}
+                </div>
               </div>
 
-              <div className="hidden md:block w-px self-stretch bg-stone-800/80 mx-0.5" />
-
               {/* PLANTED FIELD CARDS */}
-              <div className="flex-1 w-full">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1.5 flex items-center gap-1">
-                  <Sprout className="w-3 h-3 text-emerald-300" /> Planted Field ({humanPlayer.field.length} Cards)
+              <div className="w-full">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                    <Sprout className="w-3.5 h-3.5 text-emerald-300" />
+                    Planted Sanctuary Field ({humanPlayer.field.length} Cards)
+                  </div>
+                  <span className="text-[11px] text-stone-400">
+                    Active in your field this turn
+                  </span>
                 </div>
+
                 {humanPlayer.field.length === 0 ? (
                   <div className="p-8 text-center text-xs text-stone-500 border border-dashed border-stone-800 rounded-xl">
-                    No cards in field yet.
+                    No cards currently planted in field.
                   </div>
                 ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 sm:gap-3 justify-items-center">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 justify-items-center">
                     {humanPlayer.field.map((card, i) => {
                       const isNewlyPushed = card.sleeveId === lastPushedCardId;
                       return (
@@ -1680,7 +1719,7 @@ export default function App() {
 
         {/* RIGHT SECTION: ADVANCEMENT & VALE MARKET */}
         <section
-          className={`lg:col-span-5 flex flex-col gap-3 ${
+          className={`lg:col-span-5 xl:col-span-4 flex flex-col gap-3 ${
             mobileViewMode === 'FIELD' ? 'hidden lg:flex' : 'flex'
           }`}
         >
