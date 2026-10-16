@@ -472,7 +472,7 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
   if (!activeSlice) {
     return (
       <div
-        className={`h-1/3 w-full flex items-center justify-between px-2 border-b last:border-b-0 transition-all ${
+        className={`h-full w-full flex items-center justify-between px-2 border-b last:border-b-0 transition-all ${
           isPreviewHighlight
             ? 'bg-emerald-500/30 border-2 border-dashed border-emerald-300 animate-pulse'
             : 'bg-stone-950/35 border-stone-800/60'
@@ -490,7 +490,7 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
 
   return (
     <div
-      className={`relative h-1/3 w-full px-2 py-1 flex flex-col justify-between border-b last:border-b-0 bg-gradient-to-r transition-all select-none overflow-hidden ${
+      className={`relative h-full w-full px-2 py-1.5 flex flex-col justify-between border-b last:border-b-0 bg-gradient-to-r transition-all select-none overflow-hidden ${
         themeClasses[activeSlice.artTheme]
       } ${previewSlice ? 'ring-2 ring-emerald-400 brightness-125' : ''}`}
     >
@@ -518,7 +518,7 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-1 z-10 mt-auto">
+      <div className="flex flex-wrap items-center justify-between gap-1 z-10 mt-auto">
         <div className="flex items-center flex-wrap gap-1">
           {eff.mana > 0 && (
             <span title={`${eff.mana} Mana`} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-sky-600/90 border border-sky-300 text-white text-[10px] font-bold shadow">
@@ -551,7 +551,7 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
 
         {eff.specialText && (
           <span
-            className="text-[9px] leading-tight text-amber-200/95 bg-black/55 px-1 sm:px-1.5 py-0.5 rounded border border-amber-500/30 truncate max-w-[85px] sm:max-w-[115px]"
+            className="text-[9px] leading-tight text-amber-200/95 bg-black/60 px-1.5 py-0.5 rounded border border-amber-500/30 truncate max-w-full"
             title={eff.specialText}
           >
             {eff.specialText}
@@ -610,14 +610,15 @@ const CardSleeveView = ({
       {['TOP', 'MIDDLE', 'BOTTOM'].map((pos) => {
         const isTargetSlot = Boolean(canAcceptSelected && selectedAdvancement?.slot === pos);
         return (
-          <SliceRenderer
-            key={pos}
-            pos={pos}
-            slice={sleeve.slots[pos]}
-            isBase={sleeve.baseSlot === pos}
-            isPreviewHighlight={isTargetSlot}
-            previewSlice={isTargetSlot && isHovered ? selectedAdvancement : null}
-          />
+          <div key={pos} className="h-1/3 w-full">
+            <SliceRenderer
+              pos={pos}
+              slice={sleeve.slots[pos]}
+              isBase={sleeve.baseSlot === pos}
+              isPreviewHighlight={isTargetSlot}
+              previewSlice={isTargetSlot && isHovered ? selectedAdvancement : null}
+            />
+          </div>
         );
       })}
     </div>
@@ -1911,24 +1912,25 @@ export default function App() {
                               <Sparkles className="w-3 h-3" /> {slice.cost} Mana
                             </span>
                           </div>
-                          <div className="h-28 sm:h-32 rounded-lg overflow-hidden border border-stone-700/60 flex flex-col bg-stone-950/80 shadow-inner">
+                          <div className="h-32 sm:h-36 rounded-lg overflow-hidden border border-stone-700/60 flex flex-col bg-stone-950/80 shadow-inner">
                             {['TOP', 'MIDDLE', 'BOTTOM'].map((pos) => {
                               if (slice.slot === pos) {
                                 return (
-                                  <SliceRenderer
-                                    key={pos}
-                                    slice={slice}
-                                    pos={pos}
-                                    isBase={false}
-                                  />
+                                  <div key={pos} className="flex-1 w-full min-h-[56px]">
+                                    <SliceRenderer
+                                      slice={slice}
+                                      pos={pos}
+                                      isBase={false}
+                                    />
+                                  </div>
                                 );
                               }
                               return (
                                 <div
                                   key={pos}
-                                  className="h-1/3 w-full border-b last:border-b-0 border-stone-800/40 bg-stone-950/40 flex items-center justify-center select-none"
+                                  className="h-6 sm:h-7 shrink-0 w-full border-b last:border-b-0 border-stone-800/40 bg-stone-950/40 flex items-center justify-center select-none"
                                 >
-                                  <span className="text-[8px] font-mono text-stone-600/70 tracking-widest uppercase">
+                                  <span className="text-[8px] font-mono text-stone-600/80 tracking-widest uppercase">
                                     · {pos} ·
                                   </span>
                                 </div>
