@@ -573,10 +573,17 @@ const CardSleeveView = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  const isSleevingMode = Boolean(selectedAdvancement);
   const canAcceptSelected =
-    selectedAdvancement &&
+    isSleevingMode &&
     sleeve.slots[selectedAdvancement.slot] === null &&
     sleeve.baseSlot !== selectedAdvancement.slot;
+
+  const cardStateStyle = isSleevingMode
+    ? canAcceptSelected
+      ? 'border-emerald-400 ring-4 ring-emerald-400/60 shadow-[0_0_20px_rgba(52,211,153,0.45)] cursor-pointer hover:scale-105 animate-pulse bg-emerald-950/30'
+      : 'opacity-35 grayscale filter border-stone-800 bg-stone-950/60 cursor-not-allowed'
+    : 'border-stone-700/80 hover:border-stone-600';
 
   return (
     <div
@@ -592,11 +599,7 @@ const CardSleeveView = ({
         compact
           ? 'w-[140px] h-[190px] sm:w-[155px] sm:h-[210px]'
           : 'w-full max-w-[185px] h-[215px] sm:h-[240px]'
-      } ${
-        canAcceptSelected
-          ? 'border-emerald-400 ring-2 ring-emerald-400/50 cursor-pointer hover:scale-105'
-          : 'border-stone-700/80 hover:border-stone-600'
-      } ${animationClass}`}
+      } ${cardStateStyle} ${animationClass}`}
     >
       {badgeText && (
         <div className="absolute top-1 right-1 z-20 px-1.5 py-0.5 rounded bg-black/75 border border-stone-600 text-[9px] font-bold text-amber-300">
@@ -1726,11 +1729,22 @@ export default function App() {
           <div className="bg-stone-900/70 border border-stone-800 rounded-2xl p-3 sm:p-4 flex flex-col gap-3">
             <div className="flex items-center justify-between border-b border-stone-800 pb-2">
               <div>
-                <h2 className="text-sm font-bold text-amber-300 uppercase tracking-wider">
-                  Advancement Market
+                <h2 className="text-sm font-bold text-amber-300 uppercase tracking-wider flex items-center gap-2">
+                  <span>Advancement Market</span>
+                  {phase === 'HARVEST' ? (
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/70 text-emerald-300 text-[10px] font-bold animate-pulse">
+                      HARVEST ACTIVE: Buy Cards Below
+                    </span>
+                  ) : (
+                    <span className="px-2 py-0.5 rounded-full bg-stone-800 text-stone-400 text-[10px]">
+                      Opens in Harvest
+                    </span>
+                  )}
                 </h2>
                 <p className="text-[11px] text-stone-400">
-                  During Harvest, click an Advancement you can afford to sleeve it into a Field card.
+                  {phase === 'HARVEST'
+                    ? 'Click any glowing affordable card to buy and sleeve it into your field cards.'
+                    : 'During Harvest, spend your Field Mana to purchase and sleeve Advancements.'}
                 </p>
               </div>
               <span className="px-2 py-1 rounded bg-sky-950 border border-sky-700 text-sky-200 text-xs font-bold">
@@ -1756,25 +1770,60 @@ export default function App() {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     {slices.map((slice) => {
-                      const canAfford = phase === 'HARVEST' && availableMana >= slice.cost;
+                      const isHarvest = phase === 'HARVEST';
+                      const hasBuysLeft = humanPlayer.advancementsBoughtThisTurn < 2;
+                      const hasMana = availableMana >= slice.cost;
+                      const hasValidSlot = humanPlayer.field.some(
+                        (c) => c.slots[slice.slot] === null && c.baseSlot !== slice.slot
+                      );
+                      const canAfford = isHarvest && hasBuysLeft && hasMana && hasValidSlot;
                       const isSelected = selectedAdvancement?.slice.id === slice.id;
+
+                      let cardStyle = 'border-stone-800/80 bg-stone-950/60 opacity-80';
+                      if (isSelected) {
+                        cardStyle = 'border-amber-400 bg-amber-950/80 ring-2 ring-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.5)] scale-[1.02] cursor-pointer';
+                      } else if (isHarvest) {
+                        if (canAfford) {
+                          cardStyle = 'border-emerald-400/90 bg-stone-900/95 ring-2 ring-emerald-400/40 shadow-[0_0_16px_rgba(16,185,129,0.35)] hover:border-emerald-300 hover:scale-[1.02] cursor-pointer';
+                        } else {
+                          cardStyle = 'border-stone-800/80 bg-stone-950/80 opacity-30 grayscale filter brightness-50 cursor-not-allowed';
+                        }
+                      }
+
                       return (
                         <div
                           key={slice.id}
                           onClick={() => handleSelectMarketAdvancement(slice, tierKey)}
-                          className={`rounded-xl border p-1.5 flex flex-col justify-between transition cursor-pointer ${
-                            isSelected
-                              ? 'border-emerald-400 bg-emerald-950/60 ring-2 ring-emerald-400'
-                              : canAfford
-                              ? 'border-stone-700 bg-stone-950/80 hover:border-amber-400'
-                              : 'border-stone-800/80 bg-stone-950/40 opacity-75'
-                          }`}
+                          className={`rounded-xl border p-1.5 flex flex-col justify-between transition ${cardStyle}`}
                         >
                           <div className="flex items-center justify-between px-1 mb-1">
-                            <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-stone-800 text-amber-300">
-                              {slice.slot}
-                            </span>
-                            <span className="inline-flex items-center gap-0.5 text-xs font-extrabold text-sky-300">
+                            <div className="flex items-center gap-1">
+                              <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-stone-800 text-amber-300">
+                                {slice.slot}
+                              </span>
+                              {isHarvest && canAfford && !isSelected && (
+                                <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/60 animate-pulse">
+                                  Afford
+                                </span>
+                              )}
+                              {isSelected && (
+                                <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-amber-500/30 text-amber-200 border border-amber-400 font-extrabold animate-pulse">
+                                  Selected
+                                </span>
+                              )}
+                              {isHarvest && !canAfford && (
+                                <span className="text-[9px] font-semibold px-1 py-0.2 rounded bg-black/60 text-stone-400">
+                                  {!hasBuysLeft
+                                    ? 'Max 2'
+                                    : !hasMana
+                                    ? `+${slice.cost - availableMana} 💧`
+                                    : `No ${slice.slot}`}
+                                </span>
+                              )}
+                            </div>
+                            <span className={`inline-flex items-center gap-0.5 text-xs font-extrabold ${
+                              isHarvest && !hasMana ? 'text-stone-500' : 'text-sky-300'
+                            }`}>
                               <Sparkles className="w-3 h-3" /> {slice.cost} Mana
                             </span>
                           </div>
@@ -1798,20 +1847,27 @@ export default function App() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {marketVales.map((vale) => {
-                  const canClaim =
-                    phase === 'HARVEST' &&
-                    Object.entries(vale.cost).every(
-                      ([sp, req]) => (availableSpirits[sp] || 0) >= (req || 0)
-                    );
+                  const isHarvest = phase === 'HARVEST';
+                  const hasValeBuysLeft = humanPlayer.valesBoughtThisTurn < 2;
+                  const hasSpirits = Object.entries(vale.cost).every(
+                    ([sp, req]) => (availableSpirits[sp] || 0) >= (req || 0)
+                  );
+                  const canClaim = isHarvest && hasValeBuysLeft && hasSpirits;
+
+                  let valeStyle = 'bg-stone-950/60 border-stone-800 opacity-80';
+                  if (isHarvest) {
+                    if (canClaim) {
+                      valeStyle = 'bg-emerald-950/80 border-emerald-400 ring-2 ring-emerald-400/50 shadow-[0_0_18px_rgba(16,185,129,0.35)] cursor-pointer hover:scale-[1.02]';
+                    } else {
+                      valeStyle = 'bg-stone-950/80 border-stone-800/80 opacity-30 grayscale filter brightness-50 cursor-not-allowed';
+                    }
+                  }
+
                   return (
                     <div
                       key={vale.id}
                       onClick={() => handleClaimVale(vale)}
-                      className={`p-2.5 rounded-xl border flex flex-col justify-between gap-1.5 transition ${
-                        canClaim
-                          ? 'bg-emerald-950/60 border-emerald-400 cursor-pointer hover:scale-[1.02]'
-                          : 'bg-stone-950/60 border-stone-800 opacity-80'
-                      }`}
+                      className={`p-2.5 rounded-xl border flex flex-col justify-between gap-1.5 transition ${valeStyle}`}
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-bold text-stone-100">{vale.name}</span>
@@ -1827,8 +1883,13 @@ export default function App() {
                           )}
                         </div>
                         {canClaim && (
-                          <span className="text-[10px] font-extrabold text-emerald-300 uppercase">
+                          <span className="text-[10px] font-extrabold text-emerald-300 uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 border border-emerald-400/60 animate-pulse">
                             Claim Vale →
+                          </span>
+                        )}
+                        {isHarvest && !canClaim && (
+                          <span className="text-[9px] font-semibold text-stone-400">
+                            {!hasValeBuysLeft ? 'Max 2 Vales' : 'Need Spirits'}
                           </span>
                         )}
                       </div>
