@@ -1557,7 +1557,7 @@ export default function App() {
         {/* ========================================================= */}
         {/* TIER 1: THE COMMONS & MARKET (TOP DIGITAL SHELF)          */}
         {/* ========================================================= */}
-        <section className="game-section bg-stone-900/80 border border-stone-800/90 rounded-xl md:rounded-2xl p-1.5 sm:p-2 md:p-3.5 flex flex-col gap-1.5 md:gap-2.5 shadow-xl backdrop-blur-sm w-full">
+        <section className="game-section game-market-shelf bg-stone-900/80 border border-stone-800/90 rounded-xl md:rounded-2xl p-1.5 sm:p-2 md:p-3.5 flex flex-col gap-1.5 md:gap-2.5 shadow-xl backdrop-blur-sm w-full">
           {/* Market & Vales Top Header */}
           <div className="flex flex-wrap items-center justify-between gap-1.5 px-1">
             <div className="flex items-center gap-1.5 md:gap-2">
@@ -1728,11 +1728,11 @@ export default function App() {
         {/* ========================================================= */}
         {/* TIER 2: MIDDLE DRUIDIC CONTROL & RESOURCE HUD BELT        */}
         {/* ========================================================= */}
-        <section className="game-hud bg-stone-900/95 border border-stone-800 rounded-lg md:rounded-xl px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 md:gap-3 shadow-lg md:shadow-xl sticky top-0 z-30 backdrop-blur-md w-full">
-          {/* Left: Decay Spoil Tracker */}
-          <div className="flex items-center flex-wrap gap-1.5 md:gap-2.5">
+        <section className="game-hud game-hud-belt bg-stone-900/95 border border-stone-800 rounded-lg md:rounded-xl px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 md:gap-3 shadow-lg md:shadow-xl sticky top-0 z-30 backdrop-blur-md w-full">
+          {/* Left: Decay Spoil Tracker & Mana */}
+          <div className="hud-trackers flex items-center flex-wrap gap-1.5 md:gap-2.5">
             <div
-              className={`flex items-center gap-1 md:gap-2 px-1.5 md:px-3 py-0.5 md:py-1.5 rounded-md md:rounded-lg border text-[9.5px] md:text-xs font-bold transition-all ${
+              className={`hud-tracker-item flex items-center gap-1 md:gap-2 px-1.5 md:px-3 py-0.5 md:py-1.5 rounded-md md:rounded-lg border text-[9.5px] md:text-xs font-bold transition-all ${
                 humanPlayer.hasSpoiled || humanTally.netDecay >= 4
                   ? 'bg-red-950/90 border-red-500 text-red-200 animate-pulse'
                   : humanTally.netDecay === 3
@@ -1762,9 +1762,11 @@ export default function App() {
             </div>
 
             {/* Mana Tracker */}
-            <div className="flex items-center gap-1 md:gap-1.5 px-1.5 md:px-3 py-0.5 md:py-1.5 rounded-md md:rounded-lg bg-sky-950/80 border border-sky-600/60 text-sky-100 text-[9.5px] md:text-xs font-bold">
-              <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-sky-400" />
-              <span>Mana: {phase === 'HARVEST' ? availableMana : humanTally.mana}</span>
+            <div className="hud-tracker-item flex items-center gap-1 md:gap-1.5 px-1.5 md:px-3 py-0.5 md:py-1.5 rounded-md md:rounded-lg bg-sky-950/80 border border-sky-600/60 text-sky-100 text-[9.5px] md:text-xs font-bold">
+              <div className="flex items-center gap-1">
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-sky-400" />
+                <span>Mana: {phase === 'HARVEST' ? availableMana : humanTally.mana}</span>
+              </div>
               {humanPlayer.manaTokenAvailable && (
                 <button
                   onClick={handleUseManaToken}
@@ -1782,7 +1784,7 @@ export default function App() {
             </div>
 
             {/* Spirit Tokens */}
-            <div className="flex items-center gap-0.5 md:gap-1 bg-stone-950/70 px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md md:rounded-lg border border-stone-800">
+            <div className="hud-spirits flex items-center gap-0.5 md:gap-1 bg-stone-950/70 px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md md:rounded-lg border border-stone-800">
               {['FLORA', 'BEAST', 'GUARDIAN', 'CELESTIAL'].map((sp) => {
                 const val = phase === 'HARVEST' ? availableSpirits[sp] : humanTally.spirits[sp];
                 return (
@@ -1792,6 +1794,24 @@ export default function App() {
                 );
               })}
             </div>
+
+            {/* Crafting Prompt in Sidebar (for mobile landscape) */}
+            {selectedAdvancement && (
+              <div className="hidden [@media(max-height:520px)]:flex flex-col gap-1 p-1.5 rounded-md bg-emerald-950/90 border border-emerald-400/80 text-[8.5px] text-emerald-200 animate-pulse w-full">
+                <div className="flex items-center justify-between">
+                  <span className="font-extrabold text-emerald-300 flex items-center gap-0.5">
+                    <Sparkles className="w-2.5 h-2.5" /> Crafting
+                  </span>
+                  <button
+                    onClick={() => setSelectedAdvancement(null)}
+                    className="px-1 py-0.2 rounded bg-stone-800 text-stone-300 font-bold"
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <span className="truncate">Sleeve <strong>{selectedAdvancement.slice.name}</strong></span>
+              </div>
+            )}
           </div>
 
           {/* Center: Turn Phase Status Banner */}
@@ -1811,7 +1831,7 @@ export default function App() {
           </div>
 
           {/* Right: Actions */}
-          <div className="flex items-center gap-1.5 md:gap-2 ml-auto">
+          <div className="hud-actions flex items-center gap-1.5 md:gap-2 ml-auto">
             {phase === 'PLANTING' && !humanPlayer.hasSpoiled && (
               <>
                 <button
@@ -1843,13 +1863,13 @@ export default function App() {
             )}
 
             {phase === 'HARVEST' && (
-              <div className="flex items-center gap-1.5 md:gap-2.5">
-                <span className="text-[10px] md:text-xs text-emerald-300 hidden sm:inline font-medium">
+              <div className="flex flex-col sm:flex-row items-center gap-1 md:gap-2.5 w-full">
+                <span className="text-[9.5px] md:text-xs text-emerald-300 font-medium text-center">
                   Buys left: {2 - humanPlayer.advancementsBoughtThisTurn} Adv / {2 - humanPlayer.valesBoughtThisTurn} Vale
                 </span>
                 <button
                   onClick={handleEndHumanTurn}
-                  className="px-3 md:px-4 py-1 md:py-1.5 rounded-md md:rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-[10px] md:text-xs flex items-center gap-1 shadow transition cursor-pointer"
+                  className="px-3 md:px-4 py-1 md:py-1.5 rounded-md md:rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-[10px] md:text-xs flex items-center justify-center gap-1 shadow transition cursor-pointer w-full sm:w-auto"
                 >
                   Finish Turn
                   <ArrowRight className="w-3 h-3" />
@@ -1858,7 +1878,7 @@ export default function App() {
             )}
 
             {phase === 'AI_THINKING' && (
-              <div className="px-2.5 py-1 rounded-md md:rounded-lg bg-sky-950 border border-sky-500 text-sky-200 text-[10px] md:text-xs font-bold flex items-center gap-1.5">
+              <div className="px-2.5 py-1 rounded-md md:rounded-lg bg-sky-950 border border-sky-500 text-sky-200 text-[10px] md:text-xs font-bold flex items-center justify-center gap-1.5 w-full">
                 <Bot className="w-3.5 h-3.5 animate-spin" />
                 Opponent turn...
               </div>
@@ -1866,30 +1886,10 @@ export default function App() {
           </div>
         </section>
 
-        {/* Selected Advancement Sleeving Banner */}
-        {selectedAdvancement && (
-          <div className="bg-emerald-900/90 border border-emerald-400 rounded-lg md:rounded-xl px-2.5 md:px-4 py-1.5 md:py-2.5 flex items-center justify-between text-[10px] md:text-xs text-emerald-100 shadow-lg animate-pulse">
-            <div className="flex items-center gap-1.5 md:gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-spin" />
-              <span>
-                <strong>Crafting Mode:</strong> Tap any glowing card in your <strong>Sanctuary Field</strong> to sleeve{' '}
-                <strong className="underline text-amber-300 uppercase">{selectedAdvancement.slice.slot}</strong> slot with{' '}
-                <strong>{selectedAdvancement.slice.name}</strong>!
-              </span>
-            </div>
-            <button
-              onClick={() => setSelectedAdvancement(null)}
-              className="px-2 py-0.5 rounded bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-700 font-bold cursor-pointer text-[9px] md:text-xs"
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-
         {/* ========================================================= */}
         {/* TIER 3: YOUR SANCTUARY FIELD (BOTTOM DIGITAL BOARD)       */}
         {/* ========================================================= */}
-        <section className="game-section bg-stone-900/80 border border-stone-800/90 rounded-xl md:rounded-2xl p-1.5 sm:p-2 md:p-4 flex flex-col gap-1.5 md:gap-3 shadow-xl backdrop-blur-sm w-full">
+        <section className="game-section game-sanctuary-field bg-stone-900/80 border border-stone-800/90 rounded-xl md:rounded-2xl p-1.5 sm:p-2 md:p-4 flex flex-col gap-1.5 md:gap-3 shadow-xl backdrop-blur-sm w-full">
           {/* Header Row */}
           <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-stone-800 pb-1.5 px-0.5 md:px-1">
             <div className="flex items-center gap-1.5 md:gap-2">
@@ -1936,6 +1936,26 @@ export default function App() {
               </button>
             </div>
           </div>
+
+          {/* Selected Advancement Sleeving Banner */}
+          {selectedAdvancement && (
+            <div className="bg-emerald-900/90 border border-emerald-400 rounded-lg md:rounded-xl px-2.5 md:px-4 py-1 md:py-2 flex items-center justify-between text-[10px] md:text-xs text-emerald-100 shadow-lg animate-pulse shrink-0">
+              <div className="flex items-center gap-1.5 md:gap-2">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-spin" />
+                <span>
+                  <strong>Crafting Mode:</strong> Tap glowing card in <strong>Sanctuary Field</strong> to sleeve{' '}
+                  <strong className="underline text-amber-300 uppercase">{selectedAdvancement.slice.slot}</strong> with{' '}
+                  <strong>{selectedAdvancement.slice.name}</strong>!
+                </span>
+              </div>
+              <button
+                onClick={() => setSelectedAdvancement(null)}
+                className="px-2 py-0.5 rounded bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-700 font-bold cursor-pointer text-[9px] md:text-xs"
+              >
+                Cancel
+              </button>
+            </div>
+          )}
 
           {/* Main Horizontal Sanctuary Row: On-Deck Anchor on Left + Horizontally Scrollable Field on Right */}
           <div className="flex flex-row items-stretch gap-2.5 md:gap-4 overflow-hidden">
@@ -2045,7 +2065,7 @@ export default function App() {
         {/* ========================================================= */}
         {/* FOOTER: AI OPPONENT STATUS & CHRONICLE LOG               */}
         {/* ========================================================= */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-1">
+        <section className="game-footer-section grid grid-cols-1 md:grid-cols-2 gap-3 mt-1">
           <div className="bg-stone-900/60 border border-stone-800 rounded-xl p-3 flex flex-col justify-between">
             <div className="flex items-center justify-between border-b border-stone-800 pb-1.5 mb-2">
               <div className="flex items-center gap-1.5">

@@ -128,55 +128,126 @@
 
 /* Mobile Landscape view: max-height <= 520px (e.g. Pixel 10 924x412, iPhones, etc.) */
 @media (max-height: 520px) {
+  .game-main {
+    display: grid !important;
+    grid-template-columns: 1fr 185px !important;
+    grid-template-rows: 1fr 1fr !important;
+    grid-template-areas:
+      "market hud"
+      "field  hud" !important;
+    gap: 4px !important;
+    padding: 2px 4px !important;
+    height: calc(100vh - 36px) !important;
+    max-height: calc(100vh - 36px) !important;
+    overflow: hidden !important;
+  }
+
+  .game-market-shelf {
+    grid-area: market !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    padding: 2px 4px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
+  .game-sanctuary-field {
+    grid-area: field !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    padding: 2px 4px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
+  .game-hud-belt {
+    grid-area: hud !important;
+    height: 100% !important;
+    width: 185px !important;
+    min-width: 185px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: 5px !important;
+    gap: 3px !important;
+    position: static !important;
+    overflow-y: auto !important;
+    z-index: 10 !important;
+    background: rgba(28, 25, 23, 0.95) !important;
+    border-radius: 0.75rem !important;
+  }
+
+  .game-hud-belt .hud-trackers {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    width: 100% !important;
+  }
+
+  .game-hud-belt .hud-tracker-item {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 3px 6px !important;
+  }
+
+  .game-hud-belt .hud-spirits {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    padding: 2px 4px !important;
+  }
+
+  .game-hud-belt .hud-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    gap: 4px !important;
+  }
+
+  .game-hud-belt .hud-actions button {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding: 5px 4px !important;
+    font-size: 11px !important;
+  }
+
+  /* Card dimensions in landscape mobile: full height with no overlapping */
   .card-sleeve-size {
-    width: 84px !important;
-    height: 114px !important;
+    width: 104px !important;
+    height: 144px !important;
   }
 
   .card-compact-size {
-    width: 72px !important;
-    height: 98px !important;
+    width: 80px !important;
+    height: 112px !important;
   }
 
   .ondeck-panel-size {
-    width: 92px !important;
-    min-width: 92px !important;
+    width: 110px !important;
+    min-width: 110px !important;
   }
 
   .advancement-active-slot {
-    min-height: 54px !important;
+    min-height: 72px !important;
   }
 
   .advancement-inactive-slot {
-    height: 12px !important;
-  }
-
-  .game-header {
-    padding-top: 1px !important;
-    padding-bottom: 1px !important;
-    padding-left: 6px !important;
-    padding-right: 6px !important;
-  }
-
-  .game-main {
-    padding: 2px 4px !important;
-    gap: 3px !important;
-  }
-
-  .game-section {
-    padding: 3px 5px !important;
-    gap: 2px !important;
-  }
-
-  .game-hud {
-    padding-top: 2px !important;
-    padding-bottom: 2px !important;
-    padding-left: 6px !important;
-    padding-right: 6px !important;
+    height: 16px !important;
   }
 
   .empty-field-placeholder {
-    min-height: 100px !important;
+    min-height: 125px !important;
+  }
+
+  .game-footer-section {
+    display: none !important;
   }
 }
 
