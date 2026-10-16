@@ -770,6 +770,7 @@ export default function App() {
   const [onDeckAnimKey, setOnDeckAnimKey] = useState(0);
   const [dealBatchId, setDealBatchId] = useState(1);
   const [deckShuffledBanner, setDeckShuffledBanner] = useState(false);
+  const [isSpoilShaking, setIsSpoilShaking] = useState(false);
 
   const [vpPool, setVpPool] = useState(25);
   const [tier1Deck, setTier1Deck] = useState([]);
@@ -1034,6 +1035,8 @@ export default function App() {
     if (tally.isSpoiled) {
       updated.hasSpoiled = true;
       updated.manaTokenAvailable = true;
+      setIsSpoilShaking(true);
+      setTimeout(() => setIsSpoilShaking(false), 750);
       addLog(`SPOILED! Your Decay reached ${tally.netDecay} (4+ limit). Your Mana Token flipped face-up (+1 Mana for a future turn).`);
     } else {
       addLog(`Pushed! Field + On-Deck Net Decay is now ${tally.netDecay}/3.`);
@@ -1399,7 +1402,7 @@ export default function App() {
   const aiTotalVP = calculateTotalEndGameVP(aiPlayer);
 
   return (
-    <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans select-none">
+    <div className={`min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans select-none overflow-x-hidden ${isSpoilShaking ? 'animate-mv-spoil' : ''}`}>
       {}
       <style>{`
         @keyframes mvDealCard {
@@ -1448,11 +1451,13 @@ export default function App() {
           }
         }
         @keyframes mvSpoilShake {
-          0%, 100% { transform: translateX(0); }
-          20% { transform: translateX(-8px) rotate(-1.5deg); }
-          40% { transform: translateX(8px) rotate(1.5deg); }
-          60% { transform: translateX(-6px) rotate(-1deg); }
-          80% { transform: translateX(6px) rotate(1deg); }
+          0%, 100% { transform: translateX(0) translateY(0); }
+          12% { transform: translateX(-14px) translateY(5px) rotate(-1.5deg); }
+          25% { transform: translateX(14px) translateY(-5px) rotate(1.5deg); }
+          38% { transform: translateX(-12px) translateY(4px) rotate(-1.2deg); }
+          52% { transform: translateX(12px) translateY(-3px) rotate(1.2deg); }
+          68% { transform: translateX(-7px) translateY(2px) rotate(-0.6deg); }
+          84% { transform: translateX(7px) translateY(-1px) rotate(0.6deg); }
         }
         .animate-mv-deal {
           animation: mvDealCard 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -1464,9 +1469,14 @@ export default function App() {
           animation: mvFlipOnDeck 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         .animate-mv-spoil {
-          animation: mvSpoilShake 0.5s ease-in-out;
+          animation: mvSpoilShake 0.72s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
         }
       `}</style>
+
+      {/* RED FLASH & VIGNETTE ON SPOIL */}
+      {isSpoilShaking && (
+        <div className="fixed inset-0 pointer-events-none z-50 ring-8 ring-inset ring-red-600 bg-red-950/30 animate-pulse transition-opacity duration-700" />
+      )}
 
       {/* TOP HEADER BAR */}
       <header className="game-header bg-stone-900 border-b border-stone-800 px-3 sm:px-6 2xl:px-8 py-1 md:py-2 flex flex-wrap items-center justify-between gap-2 w-full">
