@@ -1468,7 +1468,7 @@ export default function App() {
       `}</style>
 
       {/* TOP HEADER BAR */}
-      <header className="bg-stone-900 border-b border-stone-800 px-3 py-2 flex flex-wrap items-center justify-between gap-2">
+      <header className="bg-stone-900 border-b border-stone-800 px-3 sm:px-6 2xl:px-8 py-2 flex flex-wrap items-center justify-between gap-2 w-full">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center shadow">
             <Sprout className="w-4 h-4 text-stone-950" />
@@ -1551,12 +1551,12 @@ export default function App() {
         </div>
       </header>
 
-      {/* MAIN DIGITAL BOARD GAME WORKSPACE */}
-      <main className="flex-1 flex flex-col gap-3.5 p-2 sm:p-4 max-w-[1920px] w-full mx-auto">
+      {/* MAIN DIGITAL BOARD GAME WORKSPACE - FULL WIDESCREEN EXPANSION */}
+      <main className="flex-1 flex flex-col gap-3.5 p-2 sm:p-4 2xl:p-6 w-full max-w-none">
         {/* ========================================================= */}
         {/* TIER 1: THE COMMONS & MARKET (TOP DIGITAL SHELF)          */}
         {/* ========================================================= */}
-        <section className="bg-stone-900/80 border border-stone-800/90 rounded-2xl p-3 sm:p-3.5 flex flex-col gap-3 shadow-2xl backdrop-blur-sm">
+        <section className="bg-stone-900/80 border border-stone-800/90 rounded-2xl p-3 sm:p-4 flex flex-col gap-3 shadow-2xl backdrop-blur-sm w-full">
           {/* AVAILABLE VALES ROW */}
           <div className="flex flex-col gap-1.5 pb-2 border-b border-stone-800/80">
             <div className="flex flex-wrap items-center justify-between gap-2 px-1">
@@ -1681,7 +1681,7 @@ export default function App() {
             </div>
 
             {/* Advancements Horizontally Scrollable Track */}
-            <div className="overflow-x-auto scrollbar-thin flex items-stretch gap-4 py-1.5 px-1">
+            <div className="overflow-x-auto scrollbar-thin flex items-stretch gap-4 py-1.5 px-1 w-full min-w-0">
               {['tier1', 'tier2', 'tier3'].map((tierKey) => {
                 const tierNum = tierKey === 'tier3' ? 3 : tierKey === 'tier2' ? 2 : 1;
                 const slices = marketAdvancements[tierKey];
@@ -1994,7 +1994,7 @@ export default function App() {
             </div>
 
             {/* RIGHT TRACK: HORIZONTALLY SCROLLABLE SANCTUARY FIELD */}
-            <div className="flex-1 overflow-x-auto scrollbar-thin flex items-stretch gap-4 py-1 px-1">
+            <div className="flex-1 overflow-x-auto scrollbar-thin flex items-stretch gap-4 py-1 px-1 min-w-0">
               {humanPlayer.field.length === 0 ? (
                 <div className="flex-1 min-h-[340px] flex items-center justify-center border-2 border-dashed border-stone-800/80 rounded-xl p-8 text-center text-stone-500 text-xs">
                   No cards currently planted in field. Push luck to plant cards!
