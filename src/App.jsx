@@ -500,7 +500,7 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
 
   return (
     <div
-      className={`relative h-full w-full px-2 py-1.5 flex flex-col justify-between border-b last:border-b-0 bg-gradient-to-r transition-all select-none overflow-hidden ${
+      className={`relative h-full w-full px-2.5 py-2 flex flex-col justify-between border-b last:border-b-0 bg-gradient-to-r transition-all select-none overflow-hidden ${
         themeClasses[activeSlice.artTheme] || themeClasses.forest
       } ${previewSlice ? 'ring-2 ring-emerald-400 brightness-125' : ''}`}
     >
@@ -518,52 +518,52 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
       )}
 
       <div className="flex items-center justify-between gap-1 z-10 relative">
-        <div className="flex items-center gap-1 min-w-0">
-          <span className="text-[8px] font-mono px-1 rounded bg-black/40 text-stone-300">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-black/60 border border-stone-700/60 text-stone-200 font-bold">
             {posLabel}
           </span>
-          <span className="text-[10px] sm:text-[11px] font-bold text-stone-100 truncate">
+          <span className="text-xs sm:text-[13px] font-bold text-stone-100 truncate">
             {activeSlice.name}
           </span>
         </div>
         <div className="flex items-center gap-1 shrink-0">
           {isBase && (
-            <span className="text-[8px] px-1 py-0.2 rounded bg-stone-800/90 border border-stone-600 text-stone-300 font-semibold">
+            <span className="text-[8px] px-1.5 py-0.5 rounded bg-stone-800/90 border border-stone-600 text-stone-300 font-semibold">
               BASE
             </span>
           )}
           {activeSlice.printedVP > 0 && (
-            <span className="inline-flex items-center gap-0.5 text-[10px] font-extrabold text-amber-300 bg-black/50 px-1.5 rounded-full border border-amber-500/40">
-              <Trophy className="w-2.5 h-2.5" />
+            <span className="inline-flex items-center gap-0.5 text-[11px] font-extrabold text-amber-300 bg-black/60 px-1.5 py-0.5 rounded-full border border-amber-500/50 shadow">
+              <Trophy className="w-3 h-3 text-amber-400" />
               {activeSlice.printedVP}
             </span>
           )}
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-1 z-10 mt-auto">
+      <div className="flex flex-wrap items-center justify-between gap-1.5 z-10 mt-auto">
         <div className="flex items-center flex-wrap gap-1">
           {eff.mana > 0 && (
-            <span title={`${eff.mana} Mana`} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-sky-600/90 border border-sky-300 text-white text-[10px] font-bold shadow">
-              <Sparkles className="w-2.5 h-2.5" />
+            <span title={`${eff.mana} Mana`} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-sky-600/90 border border-sky-300 text-white text-[11px] font-bold shadow">
+              <Sparkles className="w-3 h-3" />
               {eff.mana}
             </span>
           )}
           {eff.decay > 0 && (
-            <span title={`${eff.decay} Decay (Spoil Risk)`} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-red-700/90 border border-red-400 text-white text-[10px] font-bold shadow">
-              <Skull className="w-2.5 h-2.5" />
+            <span title={`${eff.decay} Decay (Spoil Risk)`} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-red-700/90 border border-red-400 text-white text-[11px] font-bold shadow">
+              <Skull className="w-3 h-3" />
               {eff.decay}
             </span>
           )}
           {eff.growth > 0 && (
-            <span title={`+${eff.growth} Growth (Cancels Decay)`} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-emerald-600/90 border border-emerald-300 text-white text-[10px] font-bold shadow">
-              <Sprout className="w-2.5 h-2.5" />
+            <span title={`+${eff.growth} Growth (Cancels Decay)`} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-emerald-600/90 border border-emerald-300 text-white text-[11px] font-bold shadow">
+              <Sprout className="w-3 h-3" />
               {eff.growth}
             </span>
           )}
           {eff.vpToken > 0 && (
-            <span title={`Gain ${eff.vpToken} VP Token on Harvest`} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-purple-700/90 border border-purple-300 text-amber-200 text-[10px] font-bold shadow">
-              <Trophy className="w-2.5 h-2.5" />+{eff.vpToken}
+            <span title={`Gain ${eff.vpToken} VP Token on Harvest`} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-purple-700/90 border border-purple-300 text-amber-200 text-[11px] font-bold shadow">
+              <Trophy className="w-3 h-3 text-amber-300" />+{eff.vpToken}
             </span>
           )}
           {eff.spirits &&
@@ -574,7 +574,7 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
 
         {eff.specialText && (
           <span
-            className="text-[9px] leading-tight text-amber-200/95 bg-black/60 px-1.5 py-0.5 rounded border border-amber-500/30 truncate max-w-full"
+            className="text-[10px] sm:text-[11px] leading-tight text-amber-200/95 bg-black/70 px-2 py-0.5 rounded border border-amber-500/35 line-clamp-2 max-w-full font-medium"
             title={eff.specialText}
           >
             {eff.specialText}
@@ -604,7 +604,7 @@ const CardSleeveView = ({
 
   const cardStateStyle = isSleevingMode
     ? canAcceptSelected
-      ? 'glow-outline-affordable cursor-pointer hover:scale-105 bg-emerald-950/40'
+      ? 'glow-outline-affordable cursor-pointer hover:scale-[1.03] bg-emerald-950/40'
       : 'opacity-35 grayscale filter border-stone-800 bg-stone-950/60 cursor-not-allowed'
     : 'border-stone-700/80 hover:border-stone-600';
 
@@ -618,14 +618,14 @@ const CardSleeveView = ({
           onSleeveClick(sleeve.sleeveId);
         }
       }}
-      className={`relative rounded-xl border-2 overflow-hidden flex flex-col bg-stone-900/95 shadow-lg transition-all ${
+      className={`relative rounded-xl border-2 overflow-hidden flex flex-col bg-stone-900/95 shadow-xl transition-all ${
         compact
-          ? 'w-[140px] h-[190px] sm:w-[155px] sm:h-[210px]'
-          : 'w-full max-w-[185px] h-[215px] sm:h-[240px]'
+          ? 'w-[150px] h-[215px] sm:w-[170px] sm:h-[240px] shrink-0'
+          : 'w-[215px] sm:w-[235px] md:w-[245px] h-[310px] sm:h-[340px] md:h-[355px] shrink-0'
       } ${cardStateStyle} ${animationClass}`}
     >
       {badgeText && (
-        <div className="absolute top-1 right-1 z-20 px-1.5 py-0.5 rounded bg-black/75 border border-stone-600 text-[9px] font-bold text-amber-300">
+        <div className="absolute top-1.5 right-1.5 z-20 px-2 py-0.5 rounded bg-black/85 border border-amber-500/50 text-[10px] font-bold text-amber-300 shadow">
           {badgeText}
         </div>
       )}
@@ -644,6 +644,111 @@ const CardSleeveView = ({
           </div>
         );
       })}
+    </div>
+  );
+};
+
+const AdvancementCardMarketView = ({
+  slice,
+  tierKey,
+  tierNum,
+  phase,
+  availableMana,
+  humanPlayer,
+  selectedAdvancement,
+  onSelect,
+}) => {
+  const isHarvest = phase === 'HARVEST';
+  const hasBuysLeft = humanPlayer.advancementsBoughtThisTurn < 2;
+  const hasMana = availableMana >= slice.cost;
+  const hasValidSlot = humanPlayer.field.some(
+    (c) => c.slots[slice.slot] === null && c.baseSlot !== slice.slot
+  );
+  const canAfford = isHarvest && hasBuysLeft && hasMana && hasValidSlot;
+  const isSelected = selectedAdvancement?.slice.id === slice.id;
+
+  let cardStyle = 'border-stone-800/80 bg-stone-950/70 opacity-85 hover:border-stone-700';
+  if (isSelected) {
+    cardStyle = 'glow-outline-selected bg-amber-950/80 scale-[1.02] cursor-pointer';
+  } else if (isHarvest) {
+    if (canAfford) {
+      cardStyle = 'glow-outline-affordable bg-stone-900/95 hover:scale-[1.02] cursor-pointer';
+    } else {
+      cardStyle = 'border-stone-800/80 bg-stone-950/80 opacity-35 grayscale filter brightness-50 cursor-not-allowed';
+    }
+  }
+
+  return (
+    <div
+      onClick={() => onSelect(slice, tierKey)}
+      className={`relative w-[215px] sm:w-[235px] md:w-[245px] h-[310px] sm:h-[340px] md:h-[355px] shrink-0 rounded-xl border-2 flex flex-col justify-between overflow-hidden transition-all shadow-xl ${cardStyle}`}
+    >
+      {/* Top Header of the Advancement Card */}
+      <div className="flex items-center justify-between px-2.5 py-1.5 bg-stone-900/95 border-b border-stone-800 z-10 shrink-0">
+        <div className="flex items-center gap-1.5">
+          <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">
+            {slice.slot}
+          </span>
+          <span className="text-[10px] font-bold text-stone-400">
+            T{tierNum}
+          </span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span
+            className={`inline-flex items-center gap-1 text-xs font-extrabold ${
+              isHarvest && !hasMana ? 'text-stone-500' : 'text-sky-300'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" /> {slice.cost} Mana
+          </span>
+        </div>
+      </div>
+
+      {/* 3-Slot Card Sleeve Representation */}
+      <div className="flex-1 flex flex-col bg-stone-950/90 overflow-hidden">
+        {['TOP', 'MIDDLE', 'BOTTOM'].map((pos) => {
+          if (slice.slot === pos) {
+            return (
+              <div key={pos} className="flex-1 w-full min-h-[160px] sm:min-h-[180px]">
+                <SliceRenderer slice={slice} pos={pos} isBase={false} />
+              </div>
+            );
+          }
+          return (
+            <div
+              key={pos}
+              className="h-10 sm:h-12 shrink-0 w-full border-b last:border-b-0 border-stone-800/50 bg-stone-950/40 flex items-center justify-center select-none"
+            >
+              <span className="text-[9px] font-mono text-stone-600/80 tracking-widest uppercase">
+                · {pos} ·
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Bottom Status strip */}
+      <div className="px-2.5 py-1 bg-black/75 border-t border-stone-800/80 flex items-center justify-between z-10 shrink-0 text-[10px]">
+        {isSelected ? (
+          <span className="text-amber-300 font-extrabold uppercase animate-pulse flex items-center gap-1">
+            <Sparkles className="w-3 h-3" /> Selected — Click Field
+          </span>
+        ) : isHarvest && canAfford ? (
+          <span className="text-emerald-300 font-bold uppercase animate-pulse">
+            ✓ Affordable — Tap to Buy
+          </span>
+        ) : isHarvest ? (
+          <span className="text-stone-400 font-medium truncate">
+            {!hasBuysLeft
+              ? 'Max 2 Adv/turn'
+              : !hasMana
+              ? `Need +${slice.cost - availableMana} Mana`
+              : `No empty ${slice.slot} slot`}
+          </span>
+        ) : (
+          <span className="text-stone-500">Available in Harvest</span>
+        )}
+      </div>
     </div>
   );
 };
@@ -1446,606 +1551,548 @@ export default function App() {
         </div>
       </header>
 
-      {/* RESOURCE & TURN ACTION HUD BAR */}
-      <div className="bg-stone-900/95 border-b border-stone-800 px-3 py-2 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center flex-wrap gap-2 sm:gap-3">
-          <div
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-bold ${
-              humanPlayer.hasSpoiled || humanTally.netDecay >= 4
-                ? 'bg-red-950/90 border-red-500 text-red-200 animate-pulse'
-                : humanTally.netDecay === 3
-                ? 'bg-amber-950/90 border-amber-500 text-amber-200'
-                : 'bg-stone-800 border-stone-700 text-stone-200'
-            }`}
-          >
-            <Skull className="w-4 h-4 text-red-400" />
-            <span>Decay: {humanTally.netDecay} / 3</span>
-            <span className="text-[10px] font-normal text-stone-400">
-              ({humanTally.decay}🔴 - {humanTally.growth}🟢)
-            </span>
-          </div>
-
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-sky-950/80 border border-sky-600/60 text-sky-100 text-xs font-bold">
-            <Sparkles className="w-4 h-4 text-sky-400" />
-            <span>Mana: {phase === 'HARVEST' ? availableMana : humanTally.mana}</span>
-            {humanPlayer.manaTokenAvailable && (
-              <button
-                onClick={handleUseManaToken}
-                disabled={phase !== 'HARVEST'}
-                className={`ml-1 px-1.5 py-0.5 rounded text-[10px] font-extrabold transition ${
-                  phase === 'HARVEST'
-                    ? 'bg-amber-400 text-stone-950 hover:bg-amber-300 cursor-pointer'
-                    : 'bg-stone-700 text-stone-400 cursor-not-allowed'
-                }`}
-                title="Flip your Mana Token during Harvest for +1 Bonus Mana"
-              >
-                +1 Token Ready
-              </button>
-            )}
-          </div>
-
-          <div className="flex items-center gap-1 bg-stone-950/70 px-2 py-1 rounded-lg border border-stone-800">
-            {['FLORA', 'BEAST', 'GUARDIAN', 'CELESTIAL'].map((sp) => {
-              const val = phase === 'HARVEST' ? availableSpirits[sp] : humanTally.spirits[sp];
-              return (
-                <div key={sp} className="flex items-center gap-0.5 text-xs">
-                  <SpiritBadge type={sp} count={val} />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 ml-auto">
-          {phase === 'PLANTING' && !humanPlayer.hasSpoiled && (
-            <>
-              <button
-                onClick={handlePushCard}
-                disabled={!humanPlayer.onDeck}
-                className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-stone-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md transition"
-              >
-                <Play className="w-3.5 h-3.5 fill-current" />
-                Push Luck (Plant On-Deck)
-              </button>
-              <button
-                onClick={handleEnterHarvest}
-                className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md transition"
-              >
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                Stop & Harvest
-              </button>
-            </>
-          )}
-
-          {phase === 'PLANTING' && humanPlayer.hasSpoiled && (
-            <button
-              onClick={handleEndHumanTurn}
-              className="px-4 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-md animate-bounce"
-            >
-              <AlertTriangle className="w-4 h-4" />
-              Spoiled! End Turn (+1 Mana Token)
-            </button>
-          )}
-
-          {phase === 'HARVEST' && (
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-emerald-300 hidden sm:inline">
-                Buys left: {2 - humanPlayer.advancementsBoughtThisTurn} Adv / {2 - humanPlayer.valesBoughtThisTurn} Vale
-              </span>
-              <button
-                onClick={handleEndHumanTurn}
-                className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md transition"
-              >
-                Finish Harvest & End Turn
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          )}
-
-          {phase === 'AI_THINKING' && (
-            <div className="px-3 py-1.5 rounded-lg bg-sky-950 border border-sky-500 text-sky-200 text-xs font-bold flex items-center gap-2">
-              <Bot className="w-4 h-4 animate-spin" />
-              {aiPlayer.name} is taking their turn...
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Selected Advancement Sleeving Banner */}
-      {selectedAdvancement && (
-        <div className="bg-emerald-900/90 border-b border-emerald-400 px-4 py-2 flex items-center justify-between text-xs text-emerald-100">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-emerald-300 animate-spin" />
-            <span>
-              <strong>Crafting Mode:</strong> Click any glowing card in your <strong>Field</strong> with an empty{' '}
-              <strong className="underline">{selectedAdvancement.slice.slot}</strong> slot to sleeve{' '}
-              <strong>{selectedAdvancement.slice.name}</strong>!
-            </span>
-          </div>
-          <button
-            onClick={() => setSelectedAdvancement(null)}
-            className="px-2 py-0.5 rounded bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-700"
-          >
-            Cancel
-          </button>
-        </div>
-      )}
-
-      {/* MOBILE PORTRAIT TABS */}
-      <div className="flex lg:hidden bg-stone-900 border-b border-stone-800">
-        <button
-          onClick={() => setMobileViewMode('FIELD')}
-          className={`flex-1 py-2 text-xs font-bold flex items-center justify-center gap-1.5 border-b-2 ${
-            mobileViewMode === 'FIELD'
-              ? 'border-emerald-400 text-emerald-300 bg-stone-800/60'
-              : 'border-transparent text-stone-400'
-          }`}
-        >
-          <Sprout className="w-3.5 h-3.5" />
-          Your Field ({humanPlayer.field.length})
-        </button>
-        <button
-          onClick={() => setMobileViewMode('MARKET')}
-          className={`flex-1 py-2 text-xs font-bold flex items-center justify-center gap-1.5 border-b-2 ${
-            mobileViewMode === 'MARKET'
-              ? 'border-emerald-400 text-emerald-300 bg-stone-800/60'
-              : 'border-transparent text-stone-400'
-          }`}
-        >
-          <ShoppingBag className="w-3.5 h-3.5" />
-          Market (Advancements & Vales)
-          {phase === 'HARVEST' && (
-            <span className="px-1.5 py-0.2 bg-emerald-500 text-stone-950 rounded-full text-[10px]">
-              Shop!
-            </span>
-          )}
-        </button>
-      </div>
-
-      {/* MAIN WORKSPACE */}
-      <main className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 p-3 sm:p-4 max-w-[1850px] w-full mx-auto">
-        {/* LEFT SECTION: YOUR FIELD & ON-DECK ZONE */}
-        <section
-          className={`lg:col-span-7 xl:col-span-8 flex flex-col gap-4 ${
-            mobileViewMode === 'MARKET' ? 'hidden lg:flex' : 'flex'
-          }`}
-        >
-          <div className="bg-stone-900/60 border border-stone-800/90 rounded-2xl p-3 sm:p-4 flex flex-col gap-3">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-800 pb-2">
+      {/* MAIN DIGITAL BOARD GAME WORKSPACE */}
+      <main className="flex-1 flex flex-col gap-3.5 p-2 sm:p-4 max-w-[1920px] w-full mx-auto">
+        {/* ========================================================= */}
+        {/* TIER 1: THE COMMONS & MARKET (TOP DIGITAL SHELF)          */}
+        {/* ========================================================= */}
+        <section className="bg-stone-900/80 border border-stone-800/90 rounded-2xl p-3 sm:p-3.5 flex flex-col gap-3 shadow-2xl backdrop-blur-sm">
+          {/* AVAILABLE VALES ROW */}
+          <div className="flex flex-col gap-1.5 pb-2 border-b border-stone-800/80">
+            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
               <div className="flex items-center gap-2">
-                <h2 className="text-sm font-bold text-emerald-300 uppercase tracking-wider">
-                  Your Sanctuary Field ({humanPlayer.field.length} Cards)
-                </h2>
-                {phase === 'HARVEST' && (
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-200">
-                    Harvesting Active
-                  </span>
-                )}
-                {deckShuffledBanner && (
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/25 border border-amber-400 text-amber-200 font-bold flex items-center gap-1 animate-bounce">
-                    <RotateCcw className="w-3 h-3 animate-spin" />
-                    Deck Reshuffled!
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2 sm:gap-3 text-xs text-stone-400">
-                <span className={`px-2 py-0.5 rounded transition-all ${deckShuffledBanner ? 'bg-amber-500/30 text-amber-200 ring-1 ring-amber-400' : ''}`}>
-                  Deck: <strong className="text-stone-200">{humanPlayer.deck.length}</strong>
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-300 flex items-center gap-1.5">
+                  <Leaf className="w-3.5 h-3.5 text-emerald-400" />
+                  Available Vale Cards ({marketVales.length})
                 </span>
-                <button
-                  onClick={() => setShowDiscardModal(true)}
-                  className="px-2 py-1 rounded-lg bg-stone-800/90 hover:bg-stone-700 border border-stone-700 text-stone-200 flex items-center gap-1.5 transition cursor-pointer shadow-sm"
-                  title="Click to inspect cards in your Discard Pile"
-                >
-                  <span>Discard: <strong>{humanPlayer.discard.length}</strong></span>
-                  <span
-                    className="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded bg-red-950/90 border border-red-700/70 text-red-200 text-[10px] font-extrabold"
-                    title="Cursed Lands currently in your Discard pile"
-                  >
-                    <Skull className="w-2.5 h-2.5 text-red-400" />
-                    x{cursedInDiscardCount}
-                  </span>
-                </button>
-                <span>Vales: <strong className="text-emerald-300">{humanPlayer.vales.length}</strong></span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-stone-800 border border-stone-700 text-stone-300 font-mono">
+                  Deck: {valeDeck.length}
+                </span>
               </div>
+              <span className="text-[11px] text-stone-400">
+                Claim using Spirit symbols • Max 2/turn
+              </span>
             </div>
 
-            {}
-            <div className={`flex flex-col gap-4 ${humanPlayer.hasSpoiled ? 'animate-mv-spoil' : ''}`}>
-              {/* ON-DECK PREVIEW PANEL */}
-              <div className="bg-stone-950/60 border border-amber-500/30 rounded-xl p-3 flex flex-col sm:flex-row items-center sm:items-start gap-4">
-                <div className="flex flex-col items-center shrink-0">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-1.5 flex items-center gap-1">
-                    <Eye className="w-3.5 h-3.5 text-amber-300" /> On-Deck Preview
-                  </span>
-                  {humanPlayer.onDeck ? (
-                    <div key={`ondeck_${humanPlayer.onDeck.sleeveId}_${onDeckAnimKey}`} className="relative">
-                      <CardSleeveView
-                        sleeve={humanPlayer.onDeck}
-                        badgeText="ON-DECK"
-                        compact
-                        animationClass="animate-mv-flip"
+            {/* Vales Horizontally Scrollable Track */}
+            <div className="overflow-x-auto scrollbar-thin flex items-stretch gap-3 py-1.5 px-1">
+              {marketVales.map((vale) => {
+                const isHarvest = phase === 'HARVEST';
+                const hasValeBuysLeft = humanPlayer.valesBoughtThisTurn < 2;
+                const hasSpirits = Object.entries(vale.cost).every(
+                  ([sp, req]) => (availableSpirits[sp] || 0) >= (req || 0)
+                );
+                const canClaim = isHarvest && hasValeBuysLeft && hasSpirits;
+
+                const valeImg = vale.cost?.GUARDIAN
+                  ? `${import.meta.env.BASE_URL}art/guardian.jpg`
+                  : vale.cost?.CELESTIAL
+                  ? `${import.meta.env.BASE_URL}art/celestial.jpg`
+                  : vale.cost?.BEAST
+                  ? `${import.meta.env.BASE_URL}art/beast.jpg`
+                  : `${import.meta.env.BASE_URL}art/fertile.jpg`;
+
+                let valeStyle = 'bg-stone-950/70 border-stone-800/90 opacity-85';
+                if (isHarvest) {
+                  if (canClaim) {
+                    valeStyle = 'glow-outline-affordable bg-emerald-950/80 cursor-pointer hover:scale-[1.03]';
+                  } else {
+                    valeStyle = 'bg-stone-950/80 border-stone-800/80 opacity-35 grayscale filter brightness-50 cursor-not-allowed';
+                  }
+                }
+
+                return (
+                  <div
+                    key={vale.id}
+                    onClick={() => handleClaimVale(vale)}
+                    className={`relative w-[215px] sm:w-[235px] shrink-0 p-2.5 rounded-xl border flex flex-col justify-between gap-1.5 transition-all overflow-hidden shadow-md ${valeStyle}`}
+                  >
+                    {/* VALE CARD BACKGROUND ARTWORK */}
+                    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                      <img
+                        src={valeImg}
+                        alt=""
+                        className="w-full h-full object-cover opacity-25 mix-blend-luminosity scale-105"
+                        loading="lazy"
                       />
-                      {phase === 'HARVEST' && (
-                        <div className="absolute inset-0 bg-stone-950/65 backdrop-blur-[1px] rounded-xl flex items-center justify-center p-3 text-center">
-                          <span className="text-[11px] text-stone-300 font-medium">
-                            Stays on top of deck for next turn
-                          </span>
-                        </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/50 to-stone-950/80 pointer-events-none" />
+                    </div>
+
+                    <div className="flex items-center justify-between relative z-10">
+                      <span className="text-xs font-bold text-stone-100 truncate">{vale.name}</span>
+                      <span className="px-1.5 py-0.5 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[10px] font-bold flex items-center gap-0.5 shrink-0">
+                        <Trophy className="w-2.5 h-2.5 text-amber-400" /> {vale.printedVP} VP
+                      </span>
+                    </div>
+
+                    <p className="text-[11px] text-emerald-200/90 relative z-10 leading-snug line-clamp-2">
+                      {vale.description}
+                    </p>
+
+                    <div className="flex items-center justify-between mt-auto pt-1.5 border-t border-stone-800/80 relative z-10">
+                      <div className="flex items-center gap-1">
+                        {Object.entries(vale.cost).map(([sp, req]) =>
+                          req ? <SpiritBadge key={sp} type={sp} count={req} /> : null
+                        )}
+                      </div>
+                      {canClaim && (
+                        <span className="text-[10px] font-extrabold text-emerald-300 uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 border border-emerald-400/60 animate-pulse">
+                          Claim →
+                        </span>
+                      )}
+                      {isHarvest && !canClaim && (
+                        <span className="text-[9px] font-semibold text-stone-400">
+                          {!hasValeBuysLeft ? 'Max 2' : 'Need Spirits'}
+                        </span>
                       )}
                     </div>
-                  ) : (
-                    <div className="w-[140px] h-[190px] rounded-xl border-2 border-dashed border-stone-800 flex items-center justify-center text-xs text-stone-500 text-center p-3">
-                      Deck Empty
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex-1 flex flex-col justify-center text-center sm:text-left space-y-1.5 py-1">
-                  <div className="flex items-center justify-center sm:justify-start gap-2">
-                    <span className="text-xs font-bold text-amber-300 uppercase tracking-wider">
-                      Next Card Waiting on Deck
-                    </span>
-                    {humanPlayer.onDeck && (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-200 font-semibold">
-                        Ready to Plant
-                      </span>
-                    )}
                   </div>
-                  <p className="text-xs text-stone-300 leading-relaxed">
-                    This card's Mana, Decay, and Growth symbols already count toward your current turn tally.
-                  </p>
-                  {phase === 'PLANTING' && !humanPlayer.hasSpoiled && (
-                    <p className="text-xs text-emerald-400 font-semibold">
-                      Click <strong className="text-amber-300">"Push Luck (Plant On-Deck)"</strong> at top right to plant it into your Sanctuary and flip the next card!
-                    </p>
-                  )}
-                  {phase === 'HARVEST' && (
-                    <p className="text-xs text-stone-400">
-                      Harvesting Phase: Spend your Mana and Spirit symbols in the Market. This On-Deck card will remain on top of your deck for next turn.
-                    </p>
-                  )}
-                  {humanPlayer.hasSpoiled && (
-                    <p className="text-xs text-red-400 font-semibold">
-                      Turn Spoiled (4+ Net Decay)! End your turn to claim your consolation Mana token.
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* PLANTED FIELD CARDS */}
-              <div className="w-full">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                    <Sprout className="w-3.5 h-3.5 text-emerald-300" />
-                    Planted Sanctuary Field ({humanPlayer.field.length} Cards)
-                  </div>
-                  <span className="text-[11px] text-stone-400">
-                    Active in your field this turn
-                  </span>
-                </div>
-
-                {humanPlayer.field.length === 0 ? (
-                  <div className="p-8 text-center text-xs text-stone-500 border border-dashed border-stone-800 rounded-xl">
-                    No cards currently planted in field.
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 justify-items-center">
-                    {humanPlayer.field.map((card, i) => {
-                      const isNewlyPushed = card.sleeveId === lastPushedCardId;
-                      return (
-                        <div
-                          key={`${card.sleeveId}_${isNewlyPushed ? 'pushed' : dealBatchId}`}
-                          className="flex flex-col items-center w-full max-w-[185px]"
-                        >
-                          <span className="text-[10px] font-mono text-stone-400 mb-1 flex items-center gap-1">
-                            <span>Field #{i + 1}</span>
-                            {isNewlyPushed && (
-                              <span className="px-1 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[9px] font-bold">
-                                PUSHED
-                              </span>
-                            )}
-                          </span>
-                          <CardSleeveView
-                            sleeve={card}
-                            selectedAdvancement={selectedAdvancement?.slice || null}
-                            onSleeveClick={handleSleeveCardInField}
-                            animationClass={isNewlyPushed ? 'animate-mv-push' : 'animate-mv-deal'}
-                            animationDelayMs={isNewlyPushed ? 0 : i * 110}
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+                );
+              })}
             </div>
-
-            {/* Claimed Vales Row */}
-            {humanPlayer.vales.length > 0 && (
-              <div className="mt-2 pt-2 border-t border-stone-800/80">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-stone-400 block mb-1.5">
-                  Your Claimed Vales
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {humanPlayer.vales.map((v) => (
-                    <div
-                      key={v.id}
-                      className="px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-950 to-stone-900 border border-emerald-600/50 text-xs flex items-center gap-2"
-                    >
-                      <span className="font-bold text-emerald-200">{v.name}</span>
-                      <span className="text-stone-300 text-[11px]">{v.description}</span>
-                      <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[10px] flex items-center gap-0.5">
-                        <Trophy className="w-2.5 h-2.5" /> {v.printedVP}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
 
-          {/* AI Opponent Summary & Game Log */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="bg-stone-900/50 border border-stone-800 rounded-xl p-3 flex flex-col justify-between">
-              <div className="flex items-center justify-between border-b border-stone-800 pb-1.5 mb-2">
-                <div className="flex items-center gap-1.5">
-                  <Bot className="w-4 h-4 text-sky-400" />
-                  <span className="text-xs font-bold text-stone-200">{aiPlayer.name}</span>
-                </div>
-                <span className="text-xs font-bold text-amber-300 flex items-center gap-1">
-                  <Trophy className="w-3.5 h-3.5" /> {aiTotalVP} Total VP
+          {/* ADVANCEMENTS ROW */}
+          <div className="flex flex-col gap-1.5">
+            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  Advancement Market (9 Cards)
                 </span>
+                {phase === 'HARVEST' ? (
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/60 text-emerald-300 text-[10px] font-bold animate-pulse">
+                    HARVEST ACTIVE: Buy Cards Below
+                  </span>
+                ) : (
+                  <span className="px-2 py-0.5 rounded-full bg-stone-800 text-stone-400 text-[10px]">
+                    Opens in Harvest
+                  </span>
+                )}
               </div>
-              <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                <div className="bg-stone-950/60 p-1.5 rounded border border-stone-800">
-                  <div className="text-[10px] text-stone-400">Field Cards</div>
-                  <div className="font-bold text-stone-200">{aiPlayer.field.length}</div>
-                </div>
-                <div className="bg-stone-950/60 p-1.5 rounded border border-stone-800">
-                  <div className="text-[10px] text-stone-400">VP Tokens</div>
-                  <div className="font-bold text-amber-300">{aiPlayer.vpTokens}</div>
-                </div>
-                <div className="bg-stone-950/60 p-1.5 rounded border border-stone-800">
-                  <div className="text-[10px] text-stone-400">Vales Claimed</div>
-                  <div className="font-bold text-emerald-300">{aiPlayer.vales.length}</div>
-                </div>
+              <div className="flex items-center gap-2 text-xs text-stone-400">
+                <span className="hidden sm:inline text-[11px] text-stone-400">
+                  ⇄ Scroll horizontally to browse all tiers
+                </span>
+                <span className="px-2.5 py-0.5 rounded bg-sky-950 border border-sky-700 text-sky-200 font-bold">
+                  {availableMana} Mana Available
+                </span>
               </div>
             </div>
 
-            <div className="bg-stone-900/50 border border-stone-800 rounded-xl p-3 flex flex-col h-32">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1">
-                Chronicle Log
-              </span>
-              <div className="flex-1 overflow-y-auto space-y-1 pr-1 text-[11px] text-stone-300">
-                {gameLogs.map((log, i) => (
-                  <div key={i} className={i === 0 ? 'text-emerald-300 font-medium' : 'text-stone-400'}>
-                    • {log}
+            {/* Advancements Horizontally Scrollable Track */}
+            <div className="overflow-x-auto scrollbar-thin flex items-stretch gap-4 py-1.5 px-1">
+              {['tier1', 'tier2', 'tier3'].map((tierKey) => {
+                const tierNum = tierKey === 'tier3' ? 3 : tierKey === 'tier2' ? 2 : 1;
+                const slices = marketAdvancements[tierKey];
+                const deckCount =
+                  tierKey === 'tier3'
+                    ? tier3Deck.length
+                    : tierKey === 'tier2'
+                    ? tier2Deck.length
+                    : tier1Deck.length;
+
+                return (
+                  <div key={tierKey} className="flex items-stretch gap-3 shrink-0">
+                    {/* Tier Deck Anchor Card */}
+                    <div className="w-[85px] sm:w-[95px] shrink-0 rounded-xl border border-stone-800 bg-stone-950/80 p-2.5 flex flex-col items-center justify-center text-center gap-2 shadow-inner">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-stone-800/90 border border-stone-700 text-amber-300">
+                        Tier {tierNum}
+                      </span>
+                      <div className="text-xl sm:text-2xl font-black text-stone-200">{deckCount}</div>
+                      <span className="text-[9px] text-stone-400 uppercase font-mono">In Deck</span>
+                    </div>
+
+                    {/* Cards in this Tier */}
+                    {slices.map((slice) => (
+                      <AdvancementCardMarketView
+                        key={slice.id}
+                        slice={slice}
+                        tierKey={tierKey}
+                        tierNum={tierNum}
+                        phase={phase}
+                        availableMana={availableMana}
+                        humanPlayer={humanPlayer}
+                        selectedAdvancement={selectedAdvancement}
+                        onSelect={handleSelectMarketAdvancement}
+                      />
+                    ))}
+
+                    {/* Tier Divider */}
+                    {tierKey !== 'tier3' && (
+                      <div className="w-px bg-stone-800 self-stretch my-2 shrink-0" />
+                    )}
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* RIGHT SECTION: ADVANCEMENT & VALE MARKET */}
-        <section
-          className={`lg:col-span-5 xl:col-span-4 flex flex-col gap-3 ${
-            mobileViewMode === 'FIELD' ? 'hidden lg:flex' : 'flex'
-          }`}
-        >
-          <div className="bg-stone-900/70 border border-stone-800 rounded-2xl p-3 sm:p-4 flex flex-col gap-3">
-            <div className="flex items-center justify-between border-b border-stone-800 pb-2">
-              <div>
-                <h2 className="text-sm font-bold text-amber-300 uppercase tracking-wider flex items-center gap-2">
-                  <span>Advancement Market</span>
-                  {phase === 'HARVEST' ? (
-                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/70 text-emerald-300 text-[10px] font-bold animate-pulse">
-                      HARVEST ACTIVE: Buy Cards Below
-                    </span>
-                  ) : (
-                    <span className="px-2 py-0.5 rounded-full bg-stone-800 text-stone-400 text-[10px]">
-                      Opens in Harvest
-                    </span>
-                  )}
-                </h2>
-                <p className="text-[11px] text-stone-400">
-                  {phase === 'HARVEST'
-                    ? 'Click any glowing affordable card to buy and sleeve it into your field cards.'
-                    : 'During Harvest, spend your Field Mana to purchase and sleeve Advancements.'}
-                </p>
-              </div>
-              <span className="px-2 py-1 rounded bg-sky-950 border border-sky-700 text-sky-200 text-xs font-bold">
-                {availableMana} Mana
-              </span>
-            </div>
-
-            {['tier3', 'tier2', 'tier1'].map((tierKey) => {
-              const tierNum = tierKey === 'tier3' ? 3 : tierKey === 'tier2' ? 2 : 1;
-              const slices = marketAdvancements[tierKey];
-              return (
-                <div key={tierKey} className="flex flex-col gap-1.5">
-                  <div className="flex items-center justify-between text-[11px] font-bold text-stone-400">
-                    <span>LEVEL {tierNum} ADVANCEMENTS</span>
-                    <span>
-                      Deck:{' '}
-                      {tierKey === 'tier3'
-                        ? tier3Deck.length
-                        : tierKey === 'tier2'
-                        ? tier2Deck.length
-                        : tier1Deck.length}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                    {slices.map((slice) => {
-                      const isHarvest = phase === 'HARVEST';
-                      const hasBuysLeft = humanPlayer.advancementsBoughtThisTurn < 2;
-                      const hasMana = availableMana >= slice.cost;
-                      const hasValidSlot = humanPlayer.field.some(
-                        (c) => c.slots[slice.slot] === null && c.baseSlot !== slice.slot
-                      );
-                      const canAfford = isHarvest && hasBuysLeft && hasMana && hasValidSlot;
-                      const isSelected = selectedAdvancement?.slice.id === slice.id;
-
-                      let cardStyle = 'border-stone-800/80 bg-stone-950/60 opacity-80';
-                      if (isSelected) {
-                        cardStyle = 'glow-outline-selected bg-amber-950/80 scale-[1.03] cursor-pointer';
-                      } else if (isHarvest) {
-                        if (canAfford) {
-                          cardStyle = 'glow-outline-affordable bg-stone-900/95 hover:scale-[1.03] cursor-pointer';
-                        } else {
-                          cardStyle = 'border-stone-800/80 bg-stone-950/80 opacity-30 grayscale filter brightness-50 cursor-not-allowed';
-                        }
-                      }
-
-                      return (
-                        <div
-                          key={slice.id}
-                          onClick={() => handleSelectMarketAdvancement(slice, tierKey)}
-                          className={`rounded-xl border p-1.5 flex flex-col justify-between transition ${cardStyle}`}
-                        >
-                          <div className="flex items-center justify-between px-1 mb-1">
-                            <div className="flex items-center gap-1">
-                              <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-stone-800 text-amber-300">
-                                {slice.slot}
-                              </span>
-                              {isHarvest && canAfford && !isSelected && (
-                                <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/60 animate-pulse">
-                                  Afford
-                                </span>
-                              )}
-                              {isSelected && (
-                                <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-amber-500/30 text-amber-200 border border-amber-400 font-extrabold animate-pulse">
-                                  Selected
-                                </span>
-                              )}
-                              {isHarvest && !canAfford && (
-                                <span className="text-[9px] font-semibold px-1 py-0.2 rounded bg-black/60 text-stone-400">
-                                  {!hasBuysLeft
-                                    ? 'Max 2'
-                                    : !hasMana
-                                    ? `+${slice.cost - availableMana} 💧`
-                                    : `No ${slice.slot}`}
-                                </span>
-                              )}
-                            </div>
-                            <span className={`inline-flex items-center gap-0.5 text-xs font-extrabold ${
-                              isHarvest && !hasMana ? 'text-stone-500' : 'text-sky-300'
-                            }`}>
-                              <Sparkles className="w-3 h-3" /> {slice.cost} Mana
-                            </span>
-                          </div>
-                          <div className="h-32 sm:h-36 rounded-lg overflow-hidden border border-stone-700/60 flex flex-col bg-stone-950/80 shadow-inner">
-                            {['TOP', 'MIDDLE', 'BOTTOM'].map((pos) => {
-                              if (slice.slot === pos) {
-                                return (
-                                  <div key={pos} className="flex-1 w-full min-h-[56px]">
-                                    <SliceRenderer
-                                      slice={slice}
-                                      pos={pos}
-                                      isBase={false}
-                                    />
-                                  </div>
-                                );
-                              }
-                              return (
-                                <div
-                                  key={pos}
-                                  className="h-6 sm:h-7 shrink-0 w-full border-b last:border-b-0 border-stone-800/40 bg-stone-950/40 flex items-center justify-center select-none"
-                                >
-                                  <span className="text-[8px] font-mono text-stone-600/80 tracking-widest uppercase">
-                                    · {pos} ·
-                                  </span>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-
-            <div className="mt-2 pt-2 border-t border-stone-800">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
-                  Available Vale Cards (Buy with Spirit Symbols)
-                </span>
-                <span className="text-[11px] text-stone-400">Deck: {valeDeck.length}</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {marketVales.map((vale) => {
-                  const isHarvest = phase === 'HARVEST';
-                  const hasValeBuysLeft = humanPlayer.valesBoughtThisTurn < 2;
-                  const hasSpirits = Object.entries(vale.cost).every(
-                    ([sp, req]) => (availableSpirits[sp] || 0) >= (req || 0)
-                  );
-                  const canClaim = isHarvest && hasValeBuysLeft && hasSpirits;
-
-                  const valeImg = vale.cost?.GUARDIAN
-                    ? `${import.meta.env.BASE_URL}art/guardian.jpg`
-                    : vale.cost?.CELESTIAL
-                    ? `${import.meta.env.BASE_URL}art/celestial.jpg`
-                    : vale.cost?.BEAST
-                    ? `${import.meta.env.BASE_URL}art/beast.jpg`
-                    : `${import.meta.env.BASE_URL}art/fertile.jpg`;
-
-                  let valeStyle = 'bg-stone-950/60 border-stone-800 opacity-80';
-                  if (isHarvest) {
-                    if (canClaim) {
-                      valeStyle = 'glow-outline-affordable bg-emerald-950/80 cursor-pointer hover:scale-[1.03]';
-                    } else {
-                      valeStyle = 'bg-stone-950/80 border-stone-800/80 opacity-30 grayscale filter brightness-50 cursor-not-allowed';
-                    }
-                  }
-
+        {/* ========================================================= */}
+        {/* TIER 2: MIDDLE DRUIDIC CONTROL & RESOURCE HUD BELT        */}
+        {/* ========================================================= */}
+        <section className="bg-stone-900/95 border border-stone-800 rounded-xl px-3 sm:px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shadow-xl sticky top-2 z-30 backdrop-blur-md">
+          {/* Left: Decay Spoil Tracker */}
+          <div className="flex items-center flex-wrap gap-2.5">
+            <div
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-bold transition-all ${
+                humanPlayer.hasSpoiled || humanTally.netDecay >= 4
+                  ? 'bg-red-950/90 border-red-500 text-red-200 animate-pulse'
+                  : humanTally.netDecay === 3
+                  ? 'bg-amber-950/90 border-amber-500 text-amber-200 ring-1 ring-amber-400/50'
+                  : 'bg-stone-800/90 border-stone-700 text-stone-200'
+              }`}
+            >
+              <div className="flex items-center gap-1">
+                {[1, 2, 3].map((slotIdx) => {
+                  const isFilled = humanTally.netDecay >= slotIdx;
                   return (
-                    <div
-                      key={vale.id}
-                      onClick={() => handleClaimVale(vale)}
-                      className={`relative p-2.5 rounded-xl border flex flex-col justify-between gap-1.5 transition overflow-hidden ${valeStyle}`}
-                    >
-                      {/* VALE CARD BACKGROUND ARTWORK */}
-                      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-                        <img
-                          src={valeImg}
-                          alt=""
-                          className="w-full h-full object-cover opacity-25 mix-blend-luminosity scale-105"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/45 to-stone-950/75 pointer-events-none" />
-                      </div>
-
-                      <div className="flex items-center justify-between relative z-10">
-                        <span className="text-xs font-bold text-stone-100">{vale.name}</span>
-                        <span className="px-1.5 py-0.5 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[10px] font-bold flex items-center gap-0.5">
-                          <Trophy className="w-2.5 h-2.5" /> {vale.printedVP} VP
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-emerald-300 relative z-10">{vale.description}</p>
-                      <div className="flex items-center justify-between mt-1 pt-1 border-t border-stone-800/80 relative z-10">
-                        <div className="flex items-center gap-1">
-                          {Object.entries(vale.cost).map(([sp, req]) =>
-                            req ? <SpiritBadge key={sp} type={sp} count={req} /> : null
-                          )}
-                        </div>
-                        {canClaim && (
-                          <span className="text-[10px] font-extrabold text-emerald-300 uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 border border-emerald-400/60 animate-pulse">
-                            Claim Vale →
-                          </span>
-                        )}
-                        {isHarvest && !canClaim && (
-                          <span className="text-[9px] font-semibold text-stone-400">
-                            {!hasValeBuysLeft ? 'Max 2 Vales' : 'Need Spirits'}
-                          </span>
-                        )}
-                      </div>
-                    </div>
+                    <Skull
+                      key={slotIdx}
+                      className={`w-4 h-4 ${
+                        isFilled
+                          ? 'text-red-500 fill-red-500/30'
+                          : 'text-stone-600'
+                      }`}
+                    />
                   );
                 })}
               </div>
+              <span>Decay: {humanTally.netDecay} / 3</span>
+              <span className="text-[10px] font-normal text-stone-400">
+                ({humanTally.decay}🔴 - {humanTally.growth}🟢)
+              </span>
+            </div>
+
+            {/* Mana Tracker */}
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-950/80 border border-sky-600/60 text-sky-100 text-xs font-bold">
+              <Sparkles className="w-4 h-4 text-sky-400" />
+              <span>Mana: {phase === 'HARVEST' ? availableMana : humanTally.mana}</span>
+              {humanPlayer.manaTokenAvailable && (
+                <button
+                  onClick={handleUseManaToken}
+                  disabled={phase !== 'HARVEST'}
+                  className={`ml-1 px-1.5 py-0.5 rounded text-[10px] font-extrabold transition ${
+                    phase === 'HARVEST'
+                      ? 'bg-amber-400 text-stone-950 hover:bg-amber-300 cursor-pointer shadow'
+                      : 'bg-stone-700 text-stone-400 cursor-not-allowed'
+                  }`}
+                  title="Flip your Mana Token during Harvest for +1 Bonus Mana"
+                >
+                  +1 Token Ready
+                </button>
+              )}
+            </div>
+
+            {/* Spirit Tokens */}
+            <div className="flex items-center gap-1 bg-stone-950/70 px-2.5 py-1 rounded-lg border border-stone-800">
+              {['FLORA', 'BEAST', 'GUARDIAN', 'CELESTIAL'].map((sp) => {
+                const val = phase === 'HARVEST' ? availableSpirits[sp] : humanTally.spirits[sp];
+                return (
+                  <div key={sp} className="flex items-center gap-0.5 text-xs">
+                    <SpiritBadge type={sp} count={val} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Center: Turn Phase Status Banner */}
+          <div className="hidden xl:flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-stone-950 border border-stone-700 text-xs font-extrabold text-amber-300">
+              Turn {turnNumber}
+            </span>
+            <span className="text-xs font-bold text-stone-300 uppercase tracking-wider">
+              {phase === 'PLANTING'
+                ? humanPlayer.hasSpoiled
+                  ? 'Turn Spoiled!'
+                  : 'Planting Phase'
+                : phase === 'HARVEST'
+                ? 'Harvest Phase'
+                : 'AI Opponent'}
+            </span>
+          </div>
+
+          {/* Right: Actions */}
+          <div className="flex items-center gap-2 ml-auto">
+            {phase === 'PLANTING' && !humanPlayer.hasSpoiled && (
+              <>
+                <button
+                  onClick={handlePushCard}
+                  disabled={!humanPlayer.onDeck}
+                  className="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-stone-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer"
+                >
+                  <Play className="w-3.5 h-3.5 fill-current" />
+                  Push Luck (Plant On-Deck)
+                </button>
+                <button
+                  onClick={handleEnterHarvest}
+                  className="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  Stop & Harvest
+                </button>
+              </>
+            )}
+
+            {phase === 'PLANTING' && humanPlayer.hasSpoiled && (
+              <button
+                onClick={handleEndHumanTurn}
+                className="px-4 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-md animate-bounce cursor-pointer"
+              >
+                <AlertTriangle className="w-4 h-4" />
+                Spoiled! End Turn (+1 Mana Token)
+              </button>
+            )}
+
+            {phase === 'HARVEST' && (
+              <div className="flex items-center gap-2.5">
+                <span className="text-xs text-emerald-300 hidden sm:inline font-medium">
+                  Buys left: {2 - humanPlayer.advancementsBoughtThisTurn} Adv / {2 - humanPlayer.valesBoughtThisTurn} Vale
+                </span>
+                <button
+                  onClick={handleEndHumanTurn}
+                  className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer"
+                >
+                  Finish Harvest & End Turn
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+
+            {phase === 'AI_THINKING' && (
+              <div className="px-3 py-1.5 rounded-lg bg-sky-950 border border-sky-500 text-sky-200 text-xs font-bold flex items-center gap-2">
+                <Bot className="w-4 h-4 animate-spin" />
+                {aiPlayer.name} is taking their turn...
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Selected Advancement Sleeving Banner */}
+        {selectedAdvancement && (
+          <div className="bg-emerald-900/90 border border-emerald-400 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs text-emerald-100 shadow-lg animate-pulse">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-emerald-300 animate-spin" />
+              <span>
+                <strong>Crafting Mode:</strong> Click any glowing card in your <strong>Sanctuary Field</strong> with an empty{' '}
+                <strong className="underline text-amber-300 uppercase">{selectedAdvancement.slice.slot}</strong> slot to sleeve{' '}
+                <strong>{selectedAdvancement.slice.name}</strong>!
+              </span>
+            </div>
+            <button
+              onClick={() => setSelectedAdvancement(null)}
+              className="px-2.5 py-1 rounded bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-700 font-bold cursor-pointer"
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+
+        {/* ========================================================= */}
+        {/* TIER 3: YOUR SANCTUARY FIELD (BOTTOM DIGITAL BOARD)       */}
+        {/* ========================================================= */}
+        <section className="bg-stone-900/80 border border-stone-800/90 rounded-2xl p-3 sm:p-4 flex flex-col gap-3 shadow-2xl backdrop-blur-sm">
+          {/* Header Row */}
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-800 pb-2">
+            <div className="flex items-center gap-2">
+              <h2 className="text-sm font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
+                <Sprout className="w-4 h-4 text-emerald-400" />
+                Your Sanctuary Field ({humanPlayer.field.length} Cards)
+              </h2>
+              {phase === 'HARVEST' && (
+                <span className="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-200">
+                  Harvesting Active
+                </span>
+              )}
+              {deckShuffledBanner && (
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/25 border border-amber-400 text-amber-200 font-bold flex items-center gap-1 animate-bounce">
+                  <RotateCcw className="w-3 h-3 animate-spin" />
+                  Deck Reshuffled!
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 sm:gap-3 text-xs text-stone-400">
+              <span className="text-[11px] text-stone-400 hidden md:inline">
+                ⇄ Scroll right to inspect all planted field cards
+              </span>
+              <span className={`px-2 py-0.5 rounded transition-all ${deckShuffledBanner ? 'bg-amber-500/30 text-amber-200 ring-1 ring-amber-400' : ''}`}>
+                Deck: <strong className="text-stone-200">{humanPlayer.deck.length}</strong>
+              </span>
+              <button
+                onClick={() => setShowDiscardModal(true)}
+                className="px-2 py-1 rounded-lg bg-stone-800/90 hover:bg-stone-700 border border-stone-700 text-stone-200 flex items-center gap-1.5 transition cursor-pointer shadow-sm text-xs"
+                title="Click to inspect cards in your Discard Pile"
+              >
+                <span>Discard: <strong>{humanPlayer.discard.length}</strong></span>
+                <span
+                  className="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded bg-red-950/90 border border-red-700/70 text-red-200 text-[10px] font-extrabold"
+                  title="Cursed Lands currently in your Discard pile"
+                >
+                  <Skull className="w-2.5 h-2.5 text-red-400" />
+                  x{cursedInDiscardCount}
+                </span>
+              </button>
+              <button
+                onClick={() => setShowDeckModal(true)}
+                className="px-2 py-1 rounded-lg bg-stone-800/90 hover:bg-stone-700 border border-stone-700 text-stone-200 text-xs transition cursor-pointer"
+              >
+                Inspect Deck
+              </button>
+            </div>
+          </div>
+
+          {/* Main Horizontal Sanctuary Row: On-Deck Anchor on Left + Horizontally Scrollable Field on Right */}
+          <div className="flex flex-row items-stretch gap-4 overflow-hidden">
+            {/* LEFT ANCHOR: ON-DECK PREVIEW PANEL */}
+            <div className="w-[225px] sm:w-[245px] md:w-[260px] shrink-0 bg-stone-950/80 border border-amber-500/40 rounded-xl p-2.5 flex flex-col items-center justify-between gap-2 shadow-inner">
+              <div className="flex items-center justify-between w-full px-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                  <Eye className="w-3.5 h-3.5 text-amber-300" /> On-Deck Preview
+                </span>
+                <span className="text-[9px] px-1.5 py-0.2 rounded bg-stone-800 text-stone-400 font-mono">
+                  Deck: {humanPlayer.deck.length}
+                </span>
+              </div>
+
+              {humanPlayer.onDeck ? (
+                <div key={`ondeck_${humanPlayer.onDeck.sleeveId}_${onDeckAnimKey}`} className="relative">
+                  <CardSleeveView
+                    sleeve={humanPlayer.onDeck}
+                    badgeText="ON-DECK"
+                    animationClass="animate-mv-flip"
+                  />
+                  {phase === 'HARVEST' && (
+                    <div className="absolute inset-0 bg-stone-950/70 backdrop-blur-[1px] rounded-xl flex items-center justify-center p-3 text-center">
+                      <span className="text-xs text-amber-200 font-semibold bg-black/80 px-2.5 py-1 rounded-lg border border-amber-500/30">
+                        Stays on deck for next turn
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="w-[215px] sm:w-[235px] md:w-[245px] h-[310px] sm:h-[340px] md:h-[355px] rounded-xl border-2 border-dashed border-stone-800 flex items-center justify-center text-xs text-stone-500 text-center p-4">
+                  Deck Empty
+                </div>
+              )}
+
+              <div className="text-[10px] text-center text-stone-400 w-full px-1">
+                {phase === 'PLANTING' && !humanPlayer.hasSpoiled ? (
+                  <span className="text-amber-300 font-medium">
+                    Counts to tally! Click "Push Luck" to plant.
+                  </span>
+                ) : phase === 'HARVEST' ? (
+                  <span className="text-stone-400">
+                    Remains on top of deck for next turn.
+                  </span>
+                ) : (
+                  <span className="text-red-400 font-bold">Turn Spoiled!</span>
+                )}
+              </div>
+            </div>
+
+            {/* RIGHT TRACK: HORIZONTALLY SCROLLABLE SANCTUARY FIELD */}
+            <div className="flex-1 overflow-x-auto scrollbar-thin flex items-stretch gap-4 py-1 px-1">
+              {humanPlayer.field.length === 0 ? (
+                <div className="flex-1 min-h-[340px] flex items-center justify-center border-2 border-dashed border-stone-800/80 rounded-xl p-8 text-center text-stone-500 text-xs">
+                  No cards currently planted in field. Push luck to plant cards!
+                </div>
+              ) : (
+                humanPlayer.field.map((card, i) => {
+                  const isNewlyPushed = card.sleeveId === lastPushedCardId;
+                  return (
+                    <div
+                      key={`${card.sleeveId}_${isNewlyPushed ? 'pushed' : dealBatchId}`}
+                      className="flex flex-col items-center shrink-0"
+                    >
+                      <span className="text-[10px] font-mono text-stone-400 mb-1 flex items-center gap-1.5">
+                        <span>Field #{i + 1}</span>
+                        {isNewlyPushed && (
+                          <span className="px-1.5 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[9px] font-bold animate-pulse">
+                            PUSHED
+                          </span>
+                        )}
+                      </span>
+                      <CardSleeveView
+                        sleeve={card}
+                        selectedAdvancement={selectedAdvancement?.slice || null}
+                        onSleeveClick={handleSleeveCardInField}
+                        animationClass={isNewlyPushed ? 'animate-mv-push' : 'animate-mv-deal'}
+                        animationDelayMs={isNewlyPushed ? 0 : i * 90}
+                      />
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+
+          {/* CLAIMED VALES ROW */}
+          {humanPlayer.vales.length > 0 && (
+            <div className="mt-1 pt-2 border-t border-stone-800/80">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-stone-400 block mb-1.5">
+                Your Claimed Vales ({humanPlayer.vales.length})
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {humanPlayer.vales.map((v) => (
+                  <div
+                    key={v.id}
+                    className="px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-950 to-stone-900 border border-emerald-600/50 text-xs flex items-center gap-2"
+                  >
+                    <span className="font-bold text-emerald-200">{v.name}</span>
+                    <span className="text-stone-300 text-[11px]">{v.description}</span>
+                    <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[10px] flex items-center gap-0.5">
+                      <Trophy className="w-2.5 h-2.5 text-amber-400" /> {v.printedVP}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+
+        {/* ========================================================= */}
+        {/* FOOTER: AI OPPONENT STATUS & CHRONICLE LOG               */}
+        {/* ========================================================= */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-1">
+          <div className="bg-stone-900/60 border border-stone-800 rounded-xl p-3 flex flex-col justify-between">
+            <div className="flex items-center justify-between border-b border-stone-800 pb-1.5 mb-2">
+              <div className="flex items-center gap-1.5">
+                <Bot className="w-4 h-4 text-sky-400" />
+                <span className="text-xs font-bold text-stone-200">{aiPlayer.name} ({aiDifficulty})</span>
+              </div>
+              <span className="text-xs font-bold text-amber-300 flex items-center gap-1">
+                <Trophy className="w-3.5 h-3.5 text-amber-400" /> {aiTotalVP} Total VP
+              </span>
+            </div>
+            <div className="grid grid-cols-3 gap-2 text-center text-xs">
+              <div className="bg-stone-950/70 p-1.5 rounded border border-stone-800">
+                <div className="text-[10px] text-stone-400">Field Cards</div>
+                <div className="font-bold text-stone-200">{aiPlayer.field.length}</div>
+              </div>
+              <div className="bg-stone-950/70 p-1.5 rounded border border-stone-800">
+                <div className="text-[10px] text-stone-400">VP Tokens</div>
+                <div className="font-bold text-amber-300">{aiPlayer.vpTokens}</div>
+              </div>
+              <div className="bg-stone-950/70 p-1.5 rounded border border-stone-800">
+                <div className="text-[10px] text-stone-400">Vales Claimed</div>
+                <div className="font-bold text-emerald-300">{aiPlayer.vales.length}</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-stone-900/60 border border-stone-800 rounded-xl p-3 flex flex-col h-28">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1 flex items-center gap-1">
+              <span>Chronicle Log</span>
+            </span>
+            <div className="flex-1 overflow-y-auto space-y-1 pr-1 text-[11px] text-stone-300 scrollbar-thin">
+              {gameLogs.map((log, i) => (
+                <div key={i} className={i === 0 ? 'text-emerald-300 font-medium' : 'text-stone-400'}>
+                  • {log}
+                </div>
+              ))}
             </div>
           </div>
         </section>
