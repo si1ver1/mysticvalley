@@ -439,15 +439,16 @@ function setupInitialPlanting(player) {
 // ==========================================
 
 const SpiritBadge = ({ type, count = 1, size = 'sm' }) => {
+  const iconSize = size === 'xs' ? 'w-2 h-2' : size === 'sm' ? 'w-2.5 h-2.5 md:w-3 md:h-3' : 'w-3.5 h-3.5 md:w-4 md:h-4';
   const config = {
-    GUARDIAN: { icon: <Shield className={size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'} />, bg: 'bg-slate-600 border-slate-400 text-slate-100', label: 'Guardian' },
-    BEAST: { icon: <PawPrint className={size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'} />, bg: 'bg-amber-700 border-amber-500 text-amber-100', label: 'Beast' },
-    FLORA: { icon: <Leaf className={size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'} />, bg: 'bg-emerald-700 border-emerald-400 text-emerald-100', label: 'Flora' },
-    CELESTIAL: { icon: <Sun className={size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'} />, bg: 'bg-indigo-700 border-indigo-400 text-amber-200', label: 'Celestial' },
+    GUARDIAN: { icon: <Shield className={iconSize} />, bg: 'bg-slate-600 border-slate-400 text-slate-100', label: 'Guardian' },
+    BEAST: { icon: <PawPrint className={iconSize} />, bg: 'bg-amber-700 border-amber-500 text-amber-100', label: 'Beast' },
+    FLORA: { icon: <Leaf className={iconSize} />, bg: 'bg-emerald-700 border-emerald-400 text-emerald-100', label: 'Flora' },
+    CELESTIAL: { icon: <Sun className={iconSize} />, bg: 'bg-indigo-700 border-indigo-400 text-amber-200', label: 'Celestial' },
   };
   const c = config[type];
   return (
-    <span title={`${c.label} Spirit`} className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full border text-[10px] font-bold shadow-sm ${c.bg}`}>
+    <span title={`${c.label} Spirit`} className={`inline-flex items-center gap-0.5 px-1 md:px-1.5 py-0.2 md:py-0.5 rounded-full border text-[7.5px] md:text-[10px] font-bold shadow-sm ${c.bg}`}>
       {c.icon}
       {count > 1 && <span>{count}</span>}
     </span>
@@ -482,15 +483,15 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
   if (!activeSlice) {
     return (
       <div
-        className={`h-full w-full flex items-center justify-between px-2 border-b last:border-b-0 transition-all ${
+        className={`h-full w-full flex items-center justify-between px-1.5 md:px-2 border-b last:border-b-0 transition-all ${
           isPreviewHighlight
-            ? 'bg-emerald-500/30 border-2 border-dashed border-emerald-300 animate-pulse'
+            ? 'bg-emerald-500/30 border md:border-2 border-dashed border-emerald-300 animate-pulse'
             : 'bg-stone-950/35 border-stone-800/60'
         }`}
       >
-        <span className="text-[9px] font-mono text-stone-600 uppercase">{pos} SLOT</span>
+        <span className="text-[7.5px] md:text-[9px] font-mono text-stone-600 uppercase">{pos} SLOT</span>
         {isPreviewHighlight && (
-          <span className="text-[10px] font-bold text-emerald-300">Tap to Sleeve</span>
+          <span className="text-[8px] md:text-[10px] font-bold text-emerald-300">Tap to Sleeve</span>
         )}
       </div>
     );
@@ -500,9 +501,9 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
 
   return (
     <div
-      className={`relative h-full w-full px-2.5 py-2 flex flex-col justify-between border-b last:border-b-0 bg-gradient-to-r transition-all select-none overflow-hidden ${
+      className={`relative h-full w-full px-1.5 py-0.5 md:px-2.5 md:py-2 flex flex-col justify-between border-b last:border-b-0 bg-gradient-to-r transition-all select-none overflow-hidden ${
         themeClasses[activeSlice.artTheme] || themeClasses.forest
-      } ${previewSlice ? 'ring-2 ring-emerald-400 brightness-125' : ''}`}
+      } ${previewSlice ? 'ring-1 md:ring-2 ring-emerald-400 brightness-125' : ''}`}
     >
       {/* THEMATIC CARD ARTWORK WATERMARK */}
       {themeImages[activeSlice.artTheme] && (
@@ -517,53 +518,53 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
         </div>
       )}
 
-      <div className="flex items-center justify-between gap-1 z-10 relative">
-        <div className="flex items-center gap-1.5 min-w-0">
-          <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-black/60 border border-stone-700/60 text-stone-200 font-bold">
+      <div className="flex items-center justify-between gap-0.5 md:gap-1 z-10 relative">
+        <div className="flex items-center gap-1 md:gap-1.5 min-w-0">
+          <span className="text-[7px] md:text-[9px] font-mono px-1 py-0.2 md:px-1.5 md:py-0.5 rounded bg-black/60 border border-stone-700/60 text-stone-200 font-bold">
             {posLabel}
           </span>
-          <span className="text-xs sm:text-[13px] font-bold text-stone-100 truncate">
+          <span className="text-[8.5px] sm:text-[10px] md:text-xs lg:text-[13px] font-bold text-stone-100 truncate">
             {activeSlice.name}
           </span>
         </div>
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex items-center gap-0.5 md:gap-1 shrink-0">
           {isBase && (
-            <span className="text-[8px] px-1.5 py-0.5 rounded bg-stone-800/90 border border-stone-600 text-stone-300 font-semibold">
+            <span className="text-[6.5px] md:text-[8px] px-1 md:px-1.5 py-0.2 md:py-0.5 rounded bg-stone-800/90 border border-stone-600 text-stone-300 font-semibold">
               BASE
             </span>
           )}
           {activeSlice.printedVP > 0 && (
-            <span className="inline-flex items-center gap-0.5 text-[11px] font-extrabold text-amber-300 bg-black/60 px-1.5 py-0.5 rounded-full border border-amber-500/50 shadow">
-              <Trophy className="w-3 h-3 text-amber-400" />
+            <span className="inline-flex items-center gap-0.5 text-[8px] md:text-[11px] font-extrabold text-amber-300 bg-black/60 px-1 md:px-1.5 py-0.2 md:py-0.5 rounded-full border border-amber-500/50 shadow">
+              <Trophy className="w-2 h-2 md:w-3 md:h-3 text-amber-400" />
               {activeSlice.printedVP}
             </span>
           )}
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-1.5 z-10 mt-auto">
-        <div className="flex items-center flex-wrap gap-1">
+      <div className="flex flex-wrap items-center justify-between gap-1 md:gap-1.5 z-10 mt-auto">
+        <div className="flex items-center flex-wrap gap-0.5 md:gap-1">
           {eff.mana > 0 && (
-            <span title={`${eff.mana} Mana`} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-sky-600/90 border border-sky-300 text-white text-[11px] font-bold shadow">
-              <Sparkles className="w-3 h-3" />
+            <span title={`${eff.mana} Mana`} className="inline-flex items-center gap-0.5 px-1 md:px-2 py-0.2 md:py-0.5 rounded-full bg-sky-600/90 border border-sky-300 text-white text-[7.5px] md:text-[11px] font-bold shadow">
+              <Sparkles className="w-2 h-2 md:w-3 md:h-3" />
               {eff.mana}
             </span>
           )}
           {eff.decay > 0 && (
-            <span title={`${eff.decay} Decay (Spoil Risk)`} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-red-700/90 border border-red-400 text-white text-[11px] font-bold shadow">
-              <Skull className="w-3 h-3" />
+            <span title={`${eff.decay} Decay (Spoil Risk)`} className="inline-flex items-center gap-0.5 px-1 md:px-2 py-0.2 md:py-0.5 rounded-full bg-red-700/90 border border-red-400 text-white text-[7.5px] md:text-[11px] font-bold shadow">
+              <Skull className="w-2 h-2 md:w-3 md:h-3" />
               {eff.decay}
             </span>
           )}
           {eff.growth > 0 && (
-            <span title={`+${eff.growth} Growth (Cancels Decay)`} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-emerald-600/90 border border-emerald-300 text-white text-[11px] font-bold shadow">
-              <Sprout className="w-3 h-3" />
+            <span title={`+${eff.growth} Growth (Cancels Decay)`} className="inline-flex items-center gap-0.5 px-1 md:px-2 py-0.2 md:py-0.5 rounded-full bg-emerald-600/90 border border-emerald-300 text-white text-[7.5px] md:text-[11px] font-bold shadow">
+              <Sprout className="w-2 h-2 md:w-3 md:h-3" />
               {eff.growth}
             </span>
           )}
           {eff.vpToken > 0 && (
-            <span title={`Gain ${eff.vpToken} VP Token on Harvest`} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-purple-700/90 border border-purple-300 text-amber-200 text-[11px] font-bold shadow">
-              <Trophy className="w-3 h-3 text-amber-300" />+{eff.vpToken}
+            <span title={`Gain ${eff.vpToken} VP Token on Harvest`} className="inline-flex items-center gap-0.5 px-1 md:px-2 py-0.2 md:py-0.5 rounded-full bg-purple-700/90 border border-purple-300 text-amber-200 text-[7.5px] md:text-[11px] font-bold shadow">
+              <Trophy className="w-2 h-2 md:w-3 md:h-3 text-amber-300" />+{eff.vpToken}
             </span>
           )}
           {eff.spirits &&
@@ -574,7 +575,7 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
 
         {eff.specialText && (
           <span
-            className="text-[10px] sm:text-[11px] leading-tight text-amber-200/95 bg-black/70 px-2 py-0.5 rounded border border-amber-500/35 line-clamp-2 max-w-full font-medium"
+            className="text-[7px] md:text-[10px] lg:text-[11px] leading-none md:leading-tight text-amber-200/95 bg-black/70 px-1 md:px-2 py-0.2 md:py-0.5 rounded border border-amber-500/35 line-clamp-1 md:line-clamp-2 max-w-full font-medium"
             title={eff.specialText}
           >
             {eff.specialText}
@@ -618,14 +619,12 @@ const CardSleeveView = ({
           onSleeveClick(sleeve.sleeveId);
         }
       }}
-      className={`relative rounded-xl border-2 overflow-hidden flex flex-col bg-stone-900/95 shadow-xl transition-all ${
-        compact
-          ? 'w-[150px] h-[215px] sm:w-[170px] sm:h-[240px] shrink-0'
-          : 'w-[215px] sm:w-[235px] md:w-[245px] h-[310px] sm:h-[340px] md:h-[355px] shrink-0'
+      className={`relative rounded-lg md:rounded-xl border md:border-2 overflow-hidden flex flex-col bg-stone-900/95 shadow-md md:shadow-xl transition-all ${
+        compact ? 'card-compact-size' : 'card-sleeve-size'
       } ${cardStateStyle} ${animationClass}`}
     >
       {badgeText && (
-        <div className="absolute top-1.5 right-1.5 z-20 px-2 py-0.5 rounded bg-black/85 border border-amber-500/50 text-[10px] font-bold text-amber-300 shadow">
+        <div className="absolute top-1 right-1 md:top-1.5 md:right-1.5 z-20 px-1 md:px-2 py-0.2 md:py-0.5 rounded bg-black/85 border border-amber-500/50 text-[7.5px] md:text-[10px] font-bold text-amber-300 shadow">
           {badgeText}
         </div>
       )}
@@ -681,25 +680,26 @@ const AdvancementCardMarketView = ({
   return (
     <div
       onClick={() => onSelect(slice, tierKey)}
-      className={`relative w-[215px] sm:w-[235px] md:w-[245px] h-[310px] sm:h-[340px] md:h-[355px] shrink-0 rounded-xl border-2 flex flex-col justify-between overflow-hidden transition-all shadow-xl ${cardStyle}`}
+      className={`relative card-sleeve-size rounded-lg md:rounded-xl border md:border-2 flex flex-col justify-between overflow-hidden transition-all shadow-md md:shadow-xl ${cardStyle}`}
     >
       {/* Top Header of the Advancement Card */}
-      <div className="flex items-center justify-between px-2.5 py-1.5 bg-stone-900/95 border-b border-stone-800 z-10 shrink-0">
-        <div className="flex items-center gap-1.5">
-          <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">
+      <div className="flex items-center justify-between px-1.5 md:px-2.5 py-0.5 md:py-1.5 bg-stone-900/95 border-b border-stone-800 z-10 shrink-0">
+        <div className="flex items-center gap-1 md:gap-1.5">
+          <span className="text-[7.5px] md:text-[10px] font-extrabold uppercase px-1 md:px-1.5 py-0.2 md:py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">
             {slice.slot}
           </span>
-          <span className="text-[10px] font-bold text-stone-400">
+          <span className="text-[7.5px] md:text-[10px] font-bold text-stone-400">
             T{tierNum}
           </span>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5 md:gap-1">
           <span
-            className={`inline-flex items-center gap-1 text-xs font-extrabold ${
+            className={`inline-flex items-center gap-0.5 text-[8.5px] md:text-xs font-extrabold ${
               isHarvest && !hasMana ? 'text-stone-500' : 'text-sky-300'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5" /> {slice.cost} Mana
+            <Sparkles className="w-2.5 h-2.5 md:w-3.5 md:h-3.5" /> {slice.cost}
+            <span className="hidden sm:inline ml-0.5">Mana</span>
           </span>
         </div>
       </div>
@@ -709,7 +709,7 @@ const AdvancementCardMarketView = ({
         {['TOP', 'MIDDLE', 'BOTTOM'].map((pos) => {
           if (slice.slot === pos) {
             return (
-              <div key={pos} className="flex-1 w-full min-h-[160px] sm:min-h-[180px]">
+              <div key={pos} className="flex-1 w-full advancement-active-slot">
                 <SliceRenderer slice={slice} pos={pos} isBase={false} />
               </div>
             );
@@ -717,9 +717,9 @@ const AdvancementCardMarketView = ({
           return (
             <div
               key={pos}
-              className="h-10 sm:h-12 shrink-0 w-full border-b last:border-b-0 border-stone-800/50 bg-stone-950/40 flex items-center justify-center select-none"
+              className="advancement-inactive-slot shrink-0 w-full border-b last:border-b-0 border-stone-800/50 bg-stone-950/40 flex items-center justify-center select-none"
             >
-              <span className="text-[9px] font-mono text-stone-600/80 tracking-widest uppercase">
+              <span className="text-[7px] md:text-[9px] font-mono text-stone-600/80 tracking-widest uppercase">
                 · {pos} ·
               </span>
             </div>
@@ -728,25 +728,25 @@ const AdvancementCardMarketView = ({
       </div>
 
       {/* Bottom Status strip */}
-      <div className="px-2.5 py-1 bg-black/75 border-t border-stone-800/80 flex items-center justify-between z-10 shrink-0 text-[10px]">
+      <div className="px-1.5 md:px-2.5 py-0.5 md:py-1 bg-black/75 border-t border-stone-800/80 flex items-center justify-between z-10 shrink-0 text-[7.5px] md:text-[10px]">
         {isSelected ? (
-          <span className="text-amber-300 font-extrabold uppercase animate-pulse flex items-center gap-1">
-            <Sparkles className="w-3 h-3" /> Selected — Click Field
+          <span className="text-amber-300 font-extrabold uppercase animate-pulse flex items-center gap-0.5">
+            <Sparkles className="w-2.5 h-2.5" /> Selected
           </span>
         ) : isHarvest && canAfford ? (
           <span className="text-emerald-300 font-bold uppercase animate-pulse">
-            ✓ Affordable — Tap to Buy
+            ✓ Tap to Buy
           </span>
         ) : isHarvest ? (
           <span className="text-stone-400 font-medium truncate">
             {!hasBuysLeft
-              ? 'Max 2 Adv/turn'
+              ? 'Max 2'
               : !hasMana
-              ? `Need +${slice.cost - availableMana} Mana`
-              : `No empty ${slice.slot} slot`}
+              ? `+${slice.cost - availableMana} 💧`
+              : `No ${slice.slot}`}
           </span>
         ) : (
-          <span className="text-stone-500">Available in Harvest</span>
+          <span className="text-stone-500">In Harvest</span>
         )}
       </div>
     </div>
@@ -763,6 +763,7 @@ export default function App() {
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [showDeckModal, setShowDeckModal] = useState(false);
   const [showDiscardModal, setShowDiscardModal] = useState(false);
+  const [showVales, setShowVales] = useState(false);
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [lastPushedCardId, setLastPushedCardId] = useState(null);
@@ -1468,7 +1469,7 @@ export default function App() {
       `}</style>
 
       {/* TOP HEADER BAR */}
-      <header className="bg-stone-900 border-b border-stone-800 px-3 sm:px-6 2xl:px-8 py-2 flex flex-wrap items-center justify-between gap-2 w-full">
+      <header className="game-header bg-stone-900 border-b border-stone-800 px-3 sm:px-6 2xl:px-8 py-1 md:py-2 flex flex-wrap items-center justify-between gap-2 w-full">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center shadow">
             <Sprout className="w-4 h-4 text-stone-950" />
@@ -1551,31 +1552,55 @@ export default function App() {
         </div>
       </header>
 
-      {/* MAIN DIGITAL BOARD GAME WORKSPACE - FULL WIDESCREEN EXPANSION */}
-      <main className="flex-1 flex flex-col gap-3.5 p-2 sm:p-4 2xl:p-6 w-full max-w-none">
+      {/* MAIN DIGITAL BOARD GAME WORKSPACE */}
+      <main className="game-main flex-1 flex flex-col gap-1.5 sm:gap-2 md:gap-3.5 p-1 sm:p-2 md:p-4 2xl:p-6 w-full max-w-none">
         {/* ========================================================= */}
         {/* TIER 1: THE COMMONS & MARKET (TOP DIGITAL SHELF)          */}
         {/* ========================================================= */}
-        <section className="bg-stone-900/80 border border-stone-800/90 rounded-2xl p-3 sm:p-4 flex flex-col gap-3 shadow-2xl backdrop-blur-sm w-full">
-          {/* AVAILABLE VALES ROW */}
-          <div className="flex flex-col gap-1.5 pb-2 border-b border-stone-800/80">
-            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-300 flex items-center gap-1.5">
-                  <Leaf className="w-3.5 h-3.5 text-emerald-400" />
-                  Available Vale Cards ({marketVales.length})
+        <section className="game-section bg-stone-900/80 border border-stone-800/90 rounded-xl md:rounded-2xl p-1.5 sm:p-2 md:p-3.5 flex flex-col gap-1.5 md:gap-2.5 shadow-xl backdrop-blur-sm w-full">
+          {/* Market & Vales Top Header */}
+          <div className="flex flex-wrap items-center justify-between gap-1.5 px-1">
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <span className="text-[11px] md:text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-amber-400" />
+                <span className="hidden sm:inline">Advancement</span> Market
+              </span>
+              <button
+                onClick={() => setShowVales((prev) => !prev)}
+                className={`px-1.5 md:px-2 py-0.5 rounded-md border text-[9.5px] md:text-xs font-bold flex items-center gap-1 transition cursor-pointer ${
+                  showVales
+                    ? 'bg-emerald-950/90 border-emerald-500/60 text-emerald-200'
+                    : 'bg-stone-800/90 border-stone-700 text-stone-300 hover:border-emerald-500/50'
+                }`}
+                title="Toggle Available Vale Cards"
+              >
+                <Leaf className="w-2.5 h-2.5 md:w-3 md:h-3 text-emerald-400" />
+                <span>{showVales ? 'Hide Vales' : `Vales (${marketVales.length})`}</span>
+                <span className="text-[8.5px] px-1 rounded bg-black/50 text-stone-300 font-mono">Deck: {valeDeck.length}</span>
+              </button>
+              {phase === 'HARVEST' ? (
+                <span className="px-1.5 md:px-2 py-0.2 md:py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/60 text-emerald-300 text-[8.5px] md:text-[10px] font-bold animate-pulse">
+                  HARVEST ACTIVE
                 </span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-stone-800 border border-stone-700 text-stone-300 font-mono">
-                  Deck: {valeDeck.length}
+              ) : (
+                <span className="hidden sm:inline px-1.5 py-0.2 rounded-full bg-stone-800 text-stone-400 text-[9px]">
+                  Opens in Harvest
                 </span>
-              </div>
-              <span className="text-[11px] text-stone-400">
-                Claim using Spirit symbols • Max 2/turn
+              )}
+            </div>
+            <div className="flex items-center gap-1.5 md:gap-2 text-[10px] md:text-xs text-stone-400">
+              <span className="hidden lg:inline text-[11px] text-stone-400">
+                ⇄ Scroll horizontally to browse all tiers
+              </span>
+              <span className="px-1.5 md:px-2.5 py-0.2 md:py-0.5 rounded bg-sky-950 border border-sky-700 text-sky-200 font-bold text-[10px] md:text-xs">
+                {availableMana} Mana
               </span>
             </div>
+          </div>
 
-            {/* Vales Horizontally Scrollable Track */}
-            <div className="overflow-x-auto scrollbar-thin flex items-stretch gap-3 py-1.5 px-1">
+          {/* Collapsible Vales Shelf */}
+          {showVales && (
+            <div className="overflow-x-auto scrollbar-thin flex items-stretch gap-2 md:gap-3 py-1 px-1 border-b border-stone-800/80 pb-2">
               {marketVales.map((vale) => {
                 const isHarvest = phase === 'HARVEST';
                 const hasValeBuysLeft = humanPlayer.valesBoughtThisTurn < 2;
@@ -1605,7 +1630,7 @@ export default function App() {
                   <div
                     key={vale.id}
                     onClick={() => handleClaimVale(vale)}
-                    className={`relative w-[215px] sm:w-[235px] shrink-0 p-2.5 rounded-xl border flex flex-col justify-between gap-1.5 transition-all overflow-hidden shadow-md ${valeStyle}`}
+                    className={`relative w-[135px] sm:w-[160px] md:w-[215px] lg:w-[235px] shrink-0 p-1.5 md:p-2.5 rounded-lg md:rounded-xl border flex flex-col justify-between gap-1 transition-all overflow-hidden shadow-md ${valeStyle}`}
                   >
                     {/* VALE CARD BACKGROUND ARTWORK */}
                     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -1619,29 +1644,29 @@ export default function App() {
                     </div>
 
                     <div className="flex items-center justify-between relative z-10">
-                      <span className="text-xs font-bold text-stone-100 truncate">{vale.name}</span>
-                      <span className="px-1.5 py-0.5 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[10px] font-bold flex items-center gap-0.5 shrink-0">
-                        <Trophy className="w-2.5 h-2.5 text-amber-400" /> {vale.printedVP} VP
+                      <span className="text-[10px] md:text-xs font-bold text-stone-100 truncate">{vale.name}</span>
+                      <span className="px-1 md:px-1.5 py-0.2 md:py-0.5 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[8.5px] md:text-[10px] font-bold flex items-center gap-0.5 shrink-0">
+                        <Trophy className="w-2 h-2 md:w-2.5 md:h-2.5 text-amber-400" /> {vale.printedVP} VP
                       </span>
                     </div>
 
-                    <p className="text-[11px] text-emerald-200/90 relative z-10 leading-snug line-clamp-2">
+                    <p className="text-[9px] md:text-[11px] text-emerald-200/90 relative z-10 leading-snug line-clamp-2">
                       {vale.description}
                     </p>
 
-                    <div className="flex items-center justify-between mt-auto pt-1.5 border-t border-stone-800/80 relative z-10">
-                      <div className="flex items-center gap-1">
+                    <div className="flex items-center justify-between mt-auto pt-1 border-t border-stone-800/80 relative z-10">
+                      <div className="flex items-center gap-0.5 md:gap-1">
                         {Object.entries(vale.cost).map(([sp, req]) =>
-                          req ? <SpiritBadge key={sp} type={sp} count={req} /> : null
+                          req ? <SpiritBadge key={sp} type={sp} count={req} size="xs" /> : null
                         )}
                       </div>
                       {canClaim && (
-                        <span className="text-[10px] font-extrabold text-emerald-300 uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 border border-emerald-400/60 animate-pulse">
+                        <span className="text-[8.5px] md:text-[10px] font-extrabold text-emerald-300 uppercase px-1 md:px-1.5 py-0.2 md:py-0.5 rounded bg-emerald-500/20 border border-emerald-400/60 animate-pulse">
                           Claim →
                         </span>
                       )}
                       {isHarvest && !canClaim && (
-                        <span className="text-[9px] font-semibold text-stone-400">
+                        <span className="text-[8px] md:text-[9px] font-semibold text-stone-400">
                           {!hasValeBuysLeft ? 'Max 2' : 'Need Spirits'}
                         </span>
                       )}
@@ -1650,93 +1675,64 @@ export default function App() {
                 );
               })}
             </div>
-          </div>
+          )}
 
-          {/* ADVANCEMENTS ROW */}
-          <div className="flex flex-col gap-1.5">
-            <div className="flex flex-wrap items-center justify-between gap-2 px-1">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  Advancement Market (9 Cards)
-                </span>
-                {phase === 'HARVEST' ? (
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/60 text-emerald-300 text-[10px] font-bold animate-pulse">
-                    HARVEST ACTIVE: Buy Cards Below
-                  </span>
-                ) : (
-                  <span className="px-2 py-0.5 rounded-full bg-stone-800 text-stone-400 text-[10px]">
-                    Opens in Harvest
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2 text-xs text-stone-400">
-                <span className="hidden sm:inline text-[11px] text-stone-400">
-                  ⇄ Scroll horizontally to browse all tiers
-                </span>
-                <span className="px-2.5 py-0.5 rounded bg-sky-950 border border-sky-700 text-sky-200 font-bold">
-                  {availableMana} Mana Available
-                </span>
-              </div>
-            </div>
+          {/* Advancements Horizontally Scrollable Track */}
+          <div className="overflow-x-auto scrollbar-thin flex items-stretch gap-2.5 md:gap-4 py-1 px-1 w-full min-w-0">
+            {['tier1', 'tier2', 'tier3'].map((tierKey) => {
+              const tierNum = tierKey === 'tier3' ? 3 : tierKey === 'tier2' ? 2 : 1;
+              const slices = marketAdvancements[tierKey];
+              const deckCount =
+                tierKey === 'tier3'
+                  ? tier3Deck.length
+                  : tierKey === 'tier2'
+                  ? tier2Deck.length
+                  : tier1Deck.length;
 
-            {/* Advancements Horizontally Scrollable Track */}
-            <div className="overflow-x-auto scrollbar-thin flex items-stretch gap-4 py-1.5 px-1 w-full min-w-0">
-              {['tier1', 'tier2', 'tier3'].map((tierKey) => {
-                const tierNum = tierKey === 'tier3' ? 3 : tierKey === 'tier2' ? 2 : 1;
-                const slices = marketAdvancements[tierKey];
-                const deckCount =
-                  tierKey === 'tier3'
-                    ? tier3Deck.length
-                    : tierKey === 'tier2'
-                    ? tier2Deck.length
-                    : tier1Deck.length;
-
-                return (
-                  <div key={tierKey} className="flex items-stretch gap-3 shrink-0">
-                    {/* Tier Deck Anchor Card */}
-                    <div className="w-[85px] sm:w-[95px] shrink-0 rounded-xl border border-stone-800 bg-stone-950/80 p-2.5 flex flex-col items-center justify-center text-center gap-2 shadow-inner">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-stone-800/90 border border-stone-700 text-amber-300">
-                        Tier {tierNum}
-                      </span>
-                      <div className="text-xl sm:text-2xl font-black text-stone-200">{deckCount}</div>
-                      <span className="text-[9px] text-stone-400 uppercase font-mono">In Deck</span>
-                    </div>
-
-                    {/* Cards in this Tier */}
-                    {slices.map((slice) => (
-                      <AdvancementCardMarketView
-                        key={slice.id}
-                        slice={slice}
-                        tierKey={tierKey}
-                        tierNum={tierNum}
-                        phase={phase}
-                        availableMana={availableMana}
-                        humanPlayer={humanPlayer}
-                        selectedAdvancement={selectedAdvancement}
-                        onSelect={handleSelectMarketAdvancement}
-                      />
-                    ))}
-
-                    {/* Tier Divider */}
-                    {tierKey !== 'tier3' && (
-                      <div className="w-px bg-stone-800 self-stretch my-2 shrink-0" />
-                    )}
+              return (
+                <div key={tierKey} className="flex items-stretch gap-2 md:gap-3 shrink-0">
+                  {/* Tier Deck Anchor Card */}
+                  <div className="w-[50px] sm:w-[65px] md:w-[85px] lg:w-[95px] shrink-0 rounded-lg md:rounded-xl border border-stone-800 bg-stone-950/80 p-1 md:p-2.5 flex flex-col items-center justify-center text-center gap-0.5 md:gap-2 shadow-inner">
+                    <span className="text-[7.5px] md:text-[10px] font-extrabold uppercase tracking-wider px-1 md:px-2 py-0.2 md:py-0.5 rounded bg-stone-800/90 border border-stone-700 text-amber-300">
+                      T{tierNum}
+                    </span>
+                    <div className="text-sm md:text-xl lg:text-2xl font-black text-stone-200">{deckCount}</div>
+                    <span className="text-[7px] md:text-[9px] text-stone-400 uppercase font-mono">Deck</span>
                   </div>
-                );
-              })}
-            </div>
+
+                  {/* Cards in this Tier */}
+                  {slices.map((slice) => (
+                    <AdvancementCardMarketView
+                      key={slice.id}
+                      slice={slice}
+                      tierKey={tierKey}
+                      tierNum={tierNum}
+                      phase={phase}
+                      availableMana={availableMana}
+                      humanPlayer={humanPlayer}
+                      selectedAdvancement={selectedAdvancement}
+                      onSelect={handleSelectMarketAdvancement}
+                    />
+                  ))}
+
+                  {/* Tier Divider */}
+                  {tierKey !== 'tier3' && (
+                    <div className="w-px bg-stone-800 self-stretch my-1 md:my-2 shrink-0" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </section>
 
         {/* ========================================================= */}
         {/* TIER 2: MIDDLE DRUIDIC CONTROL & RESOURCE HUD BELT        */}
         {/* ========================================================= */}
-        <section className="bg-stone-900/95 border border-stone-800 rounded-xl px-3 sm:px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shadow-xl sticky top-2 z-30 backdrop-blur-md">
+        <section className="game-hud bg-stone-900/95 border border-stone-800 rounded-lg md:rounded-xl px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 md:gap-3 shadow-lg md:shadow-xl sticky top-0 z-30 backdrop-blur-md w-full">
           {/* Left: Decay Spoil Tracker */}
-          <div className="flex items-center flex-wrap gap-2.5">
+          <div className="flex items-center flex-wrap gap-1.5 md:gap-2.5">
             <div
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-bold transition-all ${
+              className={`flex items-center gap-1 md:gap-2 px-1.5 md:px-3 py-0.5 md:py-1.5 rounded-md md:rounded-lg border text-[9.5px] md:text-xs font-bold transition-all ${
                 humanPlayer.hasSpoiled || humanTally.netDecay >= 4
                   ? 'bg-red-950/90 border-red-500 text-red-200 animate-pulse'
                   : humanTally.netDecay === 3
@@ -1744,13 +1740,13 @@ export default function App() {
                   : 'bg-stone-800/90 border-stone-700 text-stone-200'
               }`}
             >
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-0.5 md:gap-1">
                 {[1, 2, 3].map((slotIdx) => {
                   const isFilled = humanTally.netDecay >= slotIdx;
                   return (
                     <Skull
                       key={slotIdx}
-                      className={`w-4 h-4 ${
+                      className={`w-3 h-3 md:w-4 md:h-4 ${
                         isFilled
                           ? 'text-red-500 fill-red-500/30'
                           : 'text-stone-600'
@@ -1760,38 +1756,38 @@ export default function App() {
                 })}
               </div>
               <span>Decay: {humanTally.netDecay} / 3</span>
-              <span className="text-[10px] font-normal text-stone-400">
+              <span className="hidden sm:inline text-[9px] md:text-[10px] font-normal text-stone-400">
                 ({humanTally.decay}🔴 - {humanTally.growth}🟢)
               </span>
             </div>
 
             {/* Mana Tracker */}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-950/80 border border-sky-600/60 text-sky-100 text-xs font-bold">
-              <Sparkles className="w-4 h-4 text-sky-400" />
+            <div className="flex items-center gap-1 md:gap-1.5 px-1.5 md:px-3 py-0.5 md:py-1.5 rounded-md md:rounded-lg bg-sky-950/80 border border-sky-600/60 text-sky-100 text-[9.5px] md:text-xs font-bold">
+              <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-sky-400" />
               <span>Mana: {phase === 'HARVEST' ? availableMana : humanTally.mana}</span>
               {humanPlayer.manaTokenAvailable && (
                 <button
                   onClick={handleUseManaToken}
                   disabled={phase !== 'HARVEST'}
-                  className={`ml-1 px-1.5 py-0.5 rounded text-[10px] font-extrabold transition ${
+                  className={`ml-1 px-1 md:px-1.5 py-0.2 md:py-0.5 rounded text-[8px] md:text-[10px] font-extrabold transition ${
                     phase === 'HARVEST'
                       ? 'bg-amber-400 text-stone-950 hover:bg-amber-300 cursor-pointer shadow'
                       : 'bg-stone-700 text-stone-400 cursor-not-allowed'
                   }`}
                   title="Flip your Mana Token during Harvest for +1 Bonus Mana"
                 >
-                  +1 Token Ready
+                  +1 Ready
                 </button>
               )}
             </div>
 
             {/* Spirit Tokens */}
-            <div className="flex items-center gap-1 bg-stone-950/70 px-2.5 py-1 rounded-lg border border-stone-800">
+            <div className="flex items-center gap-0.5 md:gap-1 bg-stone-950/70 px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md md:rounded-lg border border-stone-800">
               {['FLORA', 'BEAST', 'GUARDIAN', 'CELESTIAL'].map((sp) => {
                 const val = phase === 'HARVEST' ? availableSpirits[sp] : humanTally.spirits[sp];
                 return (
                   <div key={sp} className="flex items-center gap-0.5 text-xs">
-                    <SpiritBadge type={sp} count={val} />
+                    <SpiritBadge type={sp} count={val} size="xs" />
                   </div>
                 );
               })}
@@ -1800,7 +1796,7 @@ export default function App() {
 
           {/* Center: Turn Phase Status Banner */}
           <div className="hidden xl:flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-stone-950 border border-stone-700 text-xs font-extrabold text-amber-300">
+            <span className="px-2.5 py-0.5 rounded-full bg-stone-950 border border-stone-700 text-xs font-extrabold text-amber-300">
               Turn {turnNumber}
             </span>
             <span className="text-xs font-bold text-stone-300 uppercase tracking-wider">
@@ -1815,23 +1811,23 @@ export default function App() {
           </div>
 
           {/* Right: Actions */}
-          <div className="flex items-center gap-2 ml-auto">
+          <div className="flex items-center gap-1.5 md:gap-2 ml-auto">
             {phase === 'PLANTING' && !humanPlayer.hasSpoiled && (
               <>
                 <button
                   onClick={handlePushCard}
                   disabled={!humanPlayer.onDeck}
-                  className="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-stone-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer"
+                  className="px-2.5 md:px-3.5 py-1 md:py-1.5 rounded-md md:rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-stone-950 font-extrabold text-[10px] md:text-xs flex items-center gap-1 shadow transition cursor-pointer"
                 >
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  Push Luck (Plant On-Deck)
+                  <Play className="w-3 h-3 fill-current" />
+                  Push Luck
                 </button>
                 <button
                   onClick={handleEnterHarvest}
-                  className="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer"
+                  className="px-2.5 md:px-3.5 py-1 md:py-1.5 rounded-md md:rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-[10px] md:text-xs flex items-center gap-1 shadow transition cursor-pointer"
                 >
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  Stop & Harvest
+                  <CheckCircle2 className="w-3 h-3" />
+                  Harvest
                 </button>
               </>
             )}
@@ -1839,32 +1835,32 @@ export default function App() {
             {phase === 'PLANTING' && humanPlayer.hasSpoiled && (
               <button
                 onClick={handleEndHumanTurn}
-                className="px-4 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-md animate-bounce cursor-pointer"
+                className="px-3 md:px-4 py-1 md:py-1.5 rounded-md md:rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-[10px] md:text-xs flex items-center gap-1 shadow animate-bounce cursor-pointer"
               >
-                <AlertTriangle className="w-4 h-4" />
-                Spoiled! End Turn (+1 Mana Token)
+                <AlertTriangle className="w-3.5 h-3.5" />
+                Spoiled! End Turn
               </button>
             )}
 
             {phase === 'HARVEST' && (
-              <div className="flex items-center gap-2.5">
-                <span className="text-xs text-emerald-300 hidden sm:inline font-medium">
+              <div className="flex items-center gap-1.5 md:gap-2.5">
+                <span className="text-[10px] md:text-xs text-emerald-300 hidden sm:inline font-medium">
                   Buys left: {2 - humanPlayer.advancementsBoughtThisTurn} Adv / {2 - humanPlayer.valesBoughtThisTurn} Vale
                 </span>
                 <button
                   onClick={handleEndHumanTurn}
-                  className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer"
+                  className="px-3 md:px-4 py-1 md:py-1.5 rounded-md md:rounded-lg bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-[10px] md:text-xs flex items-center gap-1 shadow transition cursor-pointer"
                 >
-                  Finish Harvest & End Turn
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  Finish Turn
+                  <ArrowRight className="w-3 h-3" />
                 </button>
               </div>
             )}
 
             {phase === 'AI_THINKING' && (
-              <div className="px-3 py-1.5 rounded-lg bg-sky-950 border border-sky-500 text-sky-200 text-xs font-bold flex items-center gap-2">
-                <Bot className="w-4 h-4 animate-spin" />
-                {aiPlayer.name} is taking their turn...
+              <div className="px-2.5 py-1 rounded-md md:rounded-lg bg-sky-950 border border-sky-500 text-sky-200 text-[10px] md:text-xs font-bold flex items-center gap-1.5">
+                <Bot className="w-3.5 h-3.5 animate-spin" />
+                Opponent turn...
               </div>
             )}
           </div>
@@ -1872,18 +1868,18 @@ export default function App() {
 
         {/* Selected Advancement Sleeving Banner */}
         {selectedAdvancement && (
-          <div className="bg-emerald-900/90 border border-emerald-400 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs text-emerald-100 shadow-lg animate-pulse">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-emerald-300 animate-spin" />
+          <div className="bg-emerald-900/90 border border-emerald-400 rounded-lg md:rounded-xl px-2.5 md:px-4 py-1.5 md:py-2.5 flex items-center justify-between text-[10px] md:text-xs text-emerald-100 shadow-lg animate-pulse">
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-spin" />
               <span>
-                <strong>Crafting Mode:</strong> Click any glowing card in your <strong>Sanctuary Field</strong> with an empty{' '}
-                <strong className="underline text-amber-300 uppercase">{selectedAdvancement.slice.slot}</strong> slot to sleeve{' '}
+                <strong>Crafting Mode:</strong> Tap any glowing card in your <strong>Sanctuary Field</strong> to sleeve{' '}
+                <strong className="underline text-amber-300 uppercase">{selectedAdvancement.slice.slot}</strong> slot with{' '}
                 <strong>{selectedAdvancement.slice.name}</strong>!
               </span>
             </div>
             <button
               onClick={() => setSelectedAdvancement(null)}
-              className="px-2.5 py-1 rounded bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-700 font-bold cursor-pointer"
+              className="px-2 py-0.5 rounded bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-700 font-bold cursor-pointer text-[9px] md:text-xs"
             >
               Cancel
             </button>
@@ -1893,67 +1889,64 @@ export default function App() {
         {/* ========================================================= */}
         {/* TIER 3: YOUR SANCTUARY FIELD (BOTTOM DIGITAL BOARD)       */}
         {/* ========================================================= */}
-        <section className="bg-stone-900/80 border border-stone-800/90 rounded-2xl p-3 sm:p-4 flex flex-col gap-3 shadow-2xl backdrop-blur-sm">
+        <section className="game-section bg-stone-900/80 border border-stone-800/90 rounded-xl md:rounded-2xl p-1.5 sm:p-2 md:p-4 flex flex-col gap-1.5 md:gap-3 shadow-xl backdrop-blur-sm w-full">
           {/* Header Row */}
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-800 pb-2">
-            <div className="flex items-center gap-2">
-              <h2 className="text-sm font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
-                <Sprout className="w-4 h-4 text-emerald-400" />
-                Your Sanctuary Field ({humanPlayer.field.length} Cards)
+          <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-stone-800 pb-1.5 px-0.5 md:px-1">
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <h2 className="text-[11px] md:text-sm font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-1 md:gap-1.5">
+                <Sprout className="w-3.5 h-3.5 text-emerald-400" />
+                Sanctuary ({humanPlayer.field.length} Cards)
               </h2>
               {phase === 'HARVEST' && (
-                <span className="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-200">
-                  Harvesting Active
+                <span className="text-[9px] md:text-[11px] px-1.5 md:px-2 py-0.2 md:py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-200">
+                  Harvest Active
                 </span>
               )}
               {deckShuffledBanner && (
-                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/25 border border-amber-400 text-amber-200 font-bold flex items-center gap-1 animate-bounce">
-                  <RotateCcw className="w-3 h-3 animate-spin" />
-                  Deck Reshuffled!
+                <span className="text-[9px] md:text-[11px] px-1.5 md:px-2.5 py-0.2 md:py-0.5 rounded-full bg-amber-500/25 border border-amber-400 text-amber-200 font-bold flex items-center gap-1 animate-bounce">
+                  <RotateCcw className="w-2.5 h-2.5 animate-spin" />
+                  Shuffled!
                 </span>
               )}
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3 text-xs text-stone-400">
-              <span className="text-[11px] text-stone-400 hidden md:inline">
-                ⇄ Scroll right to inspect all planted field cards
-              </span>
-              <span className={`px-2 py-0.5 rounded transition-all ${deckShuffledBanner ? 'bg-amber-500/30 text-amber-200 ring-1 ring-amber-400' : ''}`}>
+            <div className="flex items-center gap-1.5 sm:gap-3 text-[10px] md:text-xs text-stone-400">
+              <span className={`px-1.5 py-0.2 md:px-2 md:py-0.5 rounded transition-all ${deckShuffledBanner ? 'bg-amber-500/30 text-amber-200 ring-1 ring-amber-400' : ''}`}>
                 Deck: <strong className="text-stone-200">{humanPlayer.deck.length}</strong>
               </span>
               <button
                 onClick={() => setShowDiscardModal(true)}
-                className="px-2 py-1 rounded-lg bg-stone-800/90 hover:bg-stone-700 border border-stone-700 text-stone-200 flex items-center gap-1.5 transition cursor-pointer shadow-sm text-xs"
+                className="px-1.5 md:px-2 py-0.5 md:py-1 rounded-md md:rounded-lg bg-stone-800/90 hover:bg-stone-700 border border-stone-700 text-stone-200 flex items-center gap-1 transition cursor-pointer shadow-sm text-[9.5px] md:text-xs"
                 title="Click to inspect cards in your Discard Pile"
               >
                 <span>Discard: <strong>{humanPlayer.discard.length}</strong></span>
                 <span
-                  className="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded bg-red-950/90 border border-red-700/70 text-red-200 text-[10px] font-extrabold"
+                  className="inline-flex items-center gap-0.5 px-1 py-0.2 rounded bg-red-950/90 border border-red-700/70 text-red-200 text-[8.5px] md:text-[10px] font-extrabold"
                   title="Cursed Lands currently in your Discard pile"
                 >
-                  <Skull className="w-2.5 h-2.5 text-red-400" />
+                  <Skull className="w-2 h-2 md:w-2.5 md:h-2.5 text-red-400" />
                   x{cursedInDiscardCount}
                 </span>
               </button>
               <button
                 onClick={() => setShowDeckModal(true)}
-                className="px-2 py-1 rounded-lg bg-stone-800/90 hover:bg-stone-700 border border-stone-700 text-stone-200 text-xs transition cursor-pointer"
+                className="px-1.5 md:px-2 py-0.5 md:py-1 rounded-md md:rounded-lg bg-stone-800/90 hover:bg-stone-700 border border-stone-700 text-stone-200 text-[9.5px] md:text-xs transition cursor-pointer hidden sm:inline"
               >
-                Inspect Deck
+                Deck
               </button>
             </div>
           </div>
 
           {/* Main Horizontal Sanctuary Row: On-Deck Anchor on Left + Horizontally Scrollable Field on Right */}
-          <div className="flex flex-row items-stretch gap-4 overflow-hidden">
+          <div className="flex flex-row items-stretch gap-2.5 md:gap-4 overflow-hidden">
             {/* LEFT ANCHOR: ON-DECK PREVIEW PANEL */}
-            <div className="w-[225px] sm:w-[245px] md:w-[260px] shrink-0 bg-stone-950/80 border border-amber-500/40 rounded-xl p-2.5 flex flex-col items-center justify-between gap-2 shadow-inner">
-              <div className="flex items-center justify-between w-full px-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-1">
-                  <Eye className="w-3.5 h-3.5 text-amber-300" /> On-Deck Preview
+            <div className="ondeck-panel-size shrink-0 bg-stone-950/80 border border-amber-500/40 rounded-lg md:rounded-xl p-1 md:p-2.5 flex flex-col items-center justify-between gap-1 md:gap-2 shadow-inner">
+              <div className="flex items-center justify-between w-full px-0.5 md:px-1">
+                <span className="text-[8px] md:text-[10px] font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-0.5 md:gap-1">
+                  <Eye className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 text-amber-300" /> On-Deck
                 </span>
-                <span className="text-[9px] px-1.5 py-0.2 rounded bg-stone-800 text-stone-400 font-mono">
-                  Deck: {humanPlayer.deck.length}
+                <span className="text-[7.5px] md:text-[9px] px-1 md:px-1.5 py-0.2 rounded bg-stone-800 text-stone-400 font-mono">
+                  {humanPlayer.deck.length} left
                 </span>
               </div>
 
@@ -1965,38 +1958,34 @@ export default function App() {
                     animationClass="animate-mv-flip"
                   />
                   {phase === 'HARVEST' && (
-                    <div className="absolute inset-0 bg-stone-950/70 backdrop-blur-[1px] rounded-xl flex items-center justify-center p-3 text-center">
-                      <span className="text-xs text-amber-200 font-semibold bg-black/80 px-2.5 py-1 rounded-lg border border-amber-500/30">
-                        Stays on deck for next turn
+                    <div className="absolute inset-0 bg-stone-950/70 backdrop-blur-[1px] rounded-lg md:rounded-xl flex items-center justify-center p-1.5 text-center">
+                      <span className="text-[9px] md:text-xs text-amber-200 font-semibold bg-black/80 px-1.5 md:px-2.5 py-0.5 md:py-1 rounded border border-amber-500/30">
+                        Stays on deck
                       </span>
                     </div>
                   )}
                 </div>
               ) : (
-                <div className="w-[215px] sm:w-[235px] md:w-[245px] h-[310px] sm:h-[340px] md:h-[355px] rounded-xl border-2 border-dashed border-stone-800 flex items-center justify-center text-xs text-stone-500 text-center p-4">
+                <div className="card-sleeve-size rounded-lg md:rounded-xl border-2 border-dashed border-stone-800 flex items-center justify-center text-[10px] md:text-xs text-stone-500 text-center p-2">
                   Deck Empty
                 </div>
               )}
 
-              <div className="text-[10px] text-center text-stone-400 w-full px-1">
+              <div className="text-[8px] md:text-[10px] text-center text-stone-400 w-full px-0.5">
                 {phase === 'PLANTING' && !humanPlayer.hasSpoiled ? (
-                  <span className="text-amber-300 font-medium">
-                    Counts to tally! Click "Push Luck" to plant.
-                  </span>
+                  <span className="text-amber-300 font-medium">Counts to tally!</span>
                 ) : phase === 'HARVEST' ? (
-                  <span className="text-stone-400">
-                    Remains on top of deck for next turn.
-                  </span>
+                  <span className="text-stone-400">Next turn</span>
                 ) : (
-                  <span className="text-red-400 font-bold">Turn Spoiled!</span>
+                  <span className="text-red-400 font-bold">Spoiled!</span>
                 )}
               </div>
             </div>
 
             {/* RIGHT TRACK: HORIZONTALLY SCROLLABLE SANCTUARY FIELD */}
-            <div className="flex-1 overflow-x-auto scrollbar-thin flex items-stretch gap-4 py-1 px-1 min-w-0">
+            <div className="flex-1 overflow-x-auto scrollbar-thin flex items-stretch gap-2.5 md:gap-4 py-1 px-1 min-w-0">
               {humanPlayer.field.length === 0 ? (
-                <div className="flex-1 min-h-[340px] flex items-center justify-center border-2 border-dashed border-stone-800/80 rounded-xl p-8 text-center text-stone-500 text-xs">
+                <div className="flex-1 empty-field-placeholder flex items-center justify-center border-2 border-dashed border-stone-800/80 rounded-lg md:rounded-xl p-4 md:p-8 text-center text-stone-500 text-xs">
                   No cards currently planted in field. Push luck to plant cards!
                 </div>
               ) : (
@@ -2007,11 +1996,11 @@ export default function App() {
                       key={`${card.sleeveId}_${isNewlyPushed ? 'pushed' : dealBatchId}`}
                       className="flex flex-col items-center shrink-0"
                     >
-                      <span className="text-[10px] font-mono text-stone-400 mb-1 flex items-center gap-1.5">
-                        <span>Field #{i + 1}</span>
+                      <span className="text-[8.5px] md:text-[10px] font-mono text-stone-400 mb-0.5 md:mb-1 flex items-center gap-1">
+                        <span>#{i + 1}</span>
                         {isNewlyPushed && (
-                          <span className="px-1.5 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[9px] font-bold animate-pulse">
-                            PUSHED
+                          <span className="px-1 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[8px] font-bold animate-pulse">
+                            PUSH
                           </span>
                         )}
                       </span>
@@ -2031,20 +2020,20 @@ export default function App() {
 
           {/* CLAIMED VALES ROW */}
           {humanPlayer.vales.length > 0 && (
-            <div className="mt-1 pt-2 border-t border-stone-800/80">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-stone-400 block mb-1.5">
+            <div className="mt-1 pt-1.5 border-t border-stone-800/80">
+              <span className="text-[9.5px] md:text-[11px] font-bold uppercase tracking-wider text-stone-400 block mb-1">
                 Your Claimed Vales ({humanPlayer.vales.length})
               </span>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 md:gap-2">
                 {humanPlayer.vales.map((v) => (
                   <div
                     key={v.id}
-                    className="px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-950 to-stone-900 border border-emerald-600/50 text-xs flex items-center gap-2"
+                    className="px-2 py-1 md:px-2.5 md:py-1.5 rounded-md md:rounded-lg bg-gradient-to-r from-emerald-950 to-stone-900 border border-emerald-600/50 text-[10px] md:text-xs flex items-center gap-1.5"
                   >
                     <span className="font-bold text-emerald-200">{v.name}</span>
-                    <span className="text-stone-300 text-[11px]">{v.description}</span>
-                    <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[10px] flex items-center gap-0.5">
-                      <Trophy className="w-2.5 h-2.5 text-amber-400" /> {v.printedVP}
+                    <span className="text-stone-300 text-[9px] md:text-[11px] hidden sm:inline">{v.description}</span>
+                    <span className="px-1 md:px-1.5 py-0.2 md:py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[8.5px] md:text-[10px] flex items-center gap-0.5">
+                      <Trophy className="w-2 h-2 md:w-2.5 md:h-2.5 text-amber-400" /> {v.printedVP}
                     </span>
                   </div>
                 ))}

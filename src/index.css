@@ -50,3 +50,142 @@
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: rgba(16, 185, 129, 0.85);
 }
+
+/* ========================================================= */
+/* RESPONSIVE SCALING FOR CARDS & BOARD LAYOUT               */
+/* ========================================================= */
+
+/* Default / Mobile Portrait sizing (approx half desktop size) */
+.card-sleeve-size {
+  width: 115px;
+  height: 160px;
+  flex-shrink: 0;
+}
+
+.card-compact-size {
+  width: 95px;
+  height: 135px;
+  flex-shrink: 0;
+}
+
+.ondeck-panel-size {
+  width: 124px;
+  flex-shrink: 0;
+}
+
+.advancement-active-slot {
+  min-height: 85px;
+}
+
+.advancement-inactive-slot {
+  height: 18px;
+}
+
+/* Desktop sizing: screen width >= 769px AND screen height >= 521px */
+@media (min-width: 769px) and (min-height: 521px) {
+  .card-sleeve-size {
+    width: 235px;
+    height: 340px;
+  }
+
+  .card-compact-size {
+    width: 150px;
+    height: 215px;
+  }
+
+  .ondeck-panel-size {
+    width: 245px;
+  }
+
+  .advancement-active-slot {
+    min-height: 160px;
+  }
+
+  .advancement-inactive-slot {
+    height: 40px;
+  }
+}
+
+/* Large widescreen desktop */
+@media (min-width: 1536px) and (min-height: 650px) {
+  .card-sleeve-size {
+    width: 245px;
+    height: 355px;
+  }
+
+  .ondeck-panel-size {
+    width: 260px;
+  }
+
+  .advancement-active-slot {
+    min-height: 180px;
+  }
+
+  .advancement-inactive-slot {
+    height: 48px;
+  }
+}
+
+/* Mobile Landscape view: max-height <= 520px (e.g. Pixel 10 924x412, iPhones, etc.) */
+@media (max-height: 520px) {
+  .card-sleeve-size {
+    width: 84px !important;
+    height: 114px !important;
+  }
+
+  .card-compact-size {
+    width: 72px !important;
+    height: 98px !important;
+  }
+
+  .ondeck-panel-size {
+    width: 92px !important;
+    min-width: 92px !important;
+  }
+
+  .advancement-active-slot {
+    min-height: 54px !important;
+  }
+
+  .advancement-inactive-slot {
+    height: 12px !important;
+  }
+
+  .game-header {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  .game-main {
+    padding: 2px 4px !important;
+    gap: 3px !important;
+  }
+
+  .game-section {
+    padding: 3px 5px !important;
+    gap: 2px !important;
+  }
+
+  .game-hud {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  .empty-field-placeholder {
+    min-height: 100px !important;
+  }
+}
+
+.empty-field-placeholder {
+  min-height: 160px;
+}
+
+@media (min-width: 769px) and (min-height: 521px) {
+  .empty-field-placeholder {
+    min-height: 340px;
+  }
+}
