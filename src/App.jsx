@@ -635,6 +635,7 @@ export default function App() {
   const [showDeckModal, setShowDeckModal] = useState(false);
   const [showDiscardModal, setShowDiscardModal] = useState(false);
 
+  const [isLoaded, setIsLoaded] = useState(false);
   const [lastPushedCardId, setLastPushedCardId] = useState(null);
   const [onDeckAnimKey, setOnDeckAnimKey] = useState(0);
   const [dealBatchId, setDealBatchId] = useState(1);
@@ -759,9 +760,81 @@ export default function App() {
     ]);
   };
 
+  // Restore game state from localStorage if available
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem('mystic_valley_game_save_v1');
+      if (saved) {
+        const data = JSON.parse(saved);
+        if (data && data.players && data.players.length === 2 && data.marketAdvancements) {
+          setPlayers(data.players);
+          setActivePlayerIdx(data.activePlayerIdx ?? 0);
+          setPhase(data.phase ?? 'PLANTING');
+          setTurnNumber(data.turnNumber ?? 1);
+          setVpPool(data.vpPool ?? 25);
+          setTier1Deck(data.tier1Deck ?? []);
+          setTier2Deck(data.tier2Deck ?? []);
+          setTier3Deck(data.tier3Deck ?? []);
+          setMarketAdvancements(data.marketAdvancements);
+          setValeDeck(data.valeDeck ?? []);
+          setMarketVales(data.marketVales ?? []);
+          setAiDifficulty(data.aiDifficulty ?? 'ADEPT');
+          setDealBatchId((b) => b + 1);
+          setOnDeckAnimKey((k) => k + 1);
+          setGameLogs([
+            `Resumed in-progress match (Turn ${data.turnNumber ?? 1})! State restored.`,
+            ...(data.gameLogs ?? []).slice(0, 15),
+          ]);
+          setIsLoaded(true);
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn('Could not restore game save:', e);
+    }
     startNewGame('ADEPT');
+    setIsLoaded(true);
   }, []);
+
+  // Auto-save game state to localStorage after each action
+  useEffect(() => {
+    if (!isLoaded || !players || players.length === 0) return;
+    try {
+      const stateToSave = {
+        players,
+        activePlayerIdx,
+        phase,
+        turnNumber,
+        vpPool,
+        tier1Deck,
+        tier2Deck,
+        tier3Deck,
+        marketAdvancements,
+        valeDeck,
+        marketVales,
+        aiDifficulty,
+        gameLogs: gameLogs.slice(0, 20),
+      };
+      localStorage.setItem('mystic_valley_game_save_v1', JSON.stringify(stateToSave));
+    } catch (e) {
+      console.warn('Failed to auto-save game:', e);
+    }
+  }, [
+    isLoaded,
+    players,
+    activePlayerIdx,
+    phase,
+    turnNumber,
+    vpPool,
+    tier1Deck,
+    tier2Deck,
+    tier3Deck,
+    marketAdvancements,
+    valeDeck,
+    marketVales,
+    aiDifficulty,
+    gameLogs,
+  ]);
 
   const humanPlayer = players[0];
   const aiPlayer = players[1];
@@ -1296,12 +1369,19 @@ export default function App() {
             </span>
           </div>
 
+          <span className="hidden lg:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-stone-900 border border-stone-800 text-[11px] text-stone-400" title="Game state is automatically saved locally">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Auto-Saved
+          </span>
+
           <select
             value={aiDifficulty}
             onChange={(e) => {
               const lvl = e.target.value;
-              setAiDifficulty(lvl);
-              startNewGame(lvl);
+              if (window.confirm(`Switch difficulty to ${lvl}? Current game progress will be reset.`)) {
+                setAiDifficulty(lvl);
+                startNewGame(lvl);
+              }
             }}
             className="bg-stone-900 border border-stone-700 text-stone-200 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-emerald-500"
             title="Select AI Bot Level"
@@ -1329,9 +1409,13 @@ export default function App() {
           </button>
 
           <button
-            onClick={() => startNewGame(aiDifficulty)}
+            onClick={() => {
+              if (window.confirm('Restart game from scratch? Current progress will be lost.')) {
+                startNewGame(aiDifficulty);
+              }
+            }}
             className="p-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-stone-300"
-            title="New Game"
+            title="Restart / New Game"
           >
             <RotateCcw className="w-4 h-4" />
           </button>
