@@ -1827,8 +1827,29 @@ export default function App() {
                               <Sparkles className="w-3 h-3" /> {slice.cost} Mana
                             </span>
                           </div>
-                          <div className="h-16 rounded-lg overflow-hidden border border-stone-700/70">
-                            <SliceRenderer slice={slice} pos={slice.slot} isBase={false} />
+                          <div className="h-28 sm:h-32 rounded-lg overflow-hidden border border-stone-700/60 flex flex-col bg-stone-950/80 shadow-inner">
+                            {['TOP', 'MIDDLE', 'BOTTOM'].map((pos) => {
+                              if (slice.slot === pos) {
+                                return (
+                                  <SliceRenderer
+                                    key={pos}
+                                    slice={slice}
+                                    pos={pos}
+                                    isBase={false}
+                                  />
+                                );
+                              }
+                              return (
+                                <div
+                                  key={pos}
+                                  className="h-1/3 w-full border-b last:border-b-0 border-stone-800/40 bg-stone-950/40 flex items-center justify-center select-none"
+                                >
+                                  <span className="text-[8px] font-mono text-stone-600/70 tracking-widest uppercase">
+                                    · {pos} ·
+                                  </span>
+                                </div>
+                              );
+                            })}
                           </div>
                         </div>
                       );
