@@ -581,7 +581,7 @@ const CardSleeveView = ({
 
   const cardStateStyle = isSleevingMode
     ? canAcceptSelected
-      ? 'border-emerald-400 ring-4 ring-emerald-400/60 shadow-[0_0_20px_rgba(52,211,153,0.45)] cursor-pointer hover:scale-105 animate-pulse bg-emerald-950/30'
+      ? 'glow-outline-affordable cursor-pointer hover:scale-105 bg-emerald-950/40'
       : 'opacity-35 grayscale filter border-stone-800 bg-stone-950/60 cursor-not-allowed'
     : 'border-stone-700/80 hover:border-stone-600';
 
@@ -1781,10 +1781,10 @@ export default function App() {
 
                       let cardStyle = 'border-stone-800/80 bg-stone-950/60 opacity-80';
                       if (isSelected) {
-                        cardStyle = 'border-amber-400 bg-amber-950/80 ring-2 ring-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.5)] scale-[1.02] cursor-pointer';
+                        cardStyle = 'glow-outline-selected bg-amber-950/80 scale-[1.03] cursor-pointer';
                       } else if (isHarvest) {
                         if (canAfford) {
-                          cardStyle = 'border-emerald-400/90 bg-stone-900/95 ring-2 ring-emerald-400/40 shadow-[0_0_16px_rgba(16,185,129,0.35)] hover:border-emerald-300 hover:scale-[1.02] cursor-pointer';
+                          cardStyle = 'glow-outline-affordable bg-stone-900/95 hover:scale-[1.03] cursor-pointer';
                         } else {
                           cardStyle = 'border-stone-800/80 bg-stone-950/80 opacity-30 grayscale filter brightness-50 cursor-not-allowed';
                         }
@@ -1857,7 +1857,7 @@ export default function App() {
                   let valeStyle = 'bg-stone-950/60 border-stone-800 opacity-80';
                   if (isHarvest) {
                     if (canClaim) {
-                      valeStyle = 'bg-emerald-950/80 border-emerald-400 ring-2 ring-emerald-400/50 shadow-[0_0_18px_rgba(16,185,129,0.35)] cursor-pointer hover:scale-[1.02]';
+                      valeStyle = 'glow-outline-affordable bg-emerald-950/80 cursor-pointer hover:scale-[1.03]';
                     } else {
                       valeStyle = 'bg-stone-950/80 border-stone-800/80 opacity-30 grayscale filter brightness-50 cursor-not-allowed';
                     }
