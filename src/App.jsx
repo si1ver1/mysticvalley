@@ -499,7 +499,7 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
           <span className="text-[8px] font-mono px-1 rounded bg-black/40 text-stone-300">
             {posLabel}
           </span>
-          <span className="text-[11px] font-bold text-stone-100 truncate">
+          <span className="text-[10px] sm:text-[11px] font-bold text-stone-100 truncate">
             {activeSlice.name}
           </span>
         </div>
@@ -551,7 +551,7 @@ const SliceRenderer = ({ slice, pos, isBase, isPreviewHighlight, previewSlice })
 
         {eff.specialText && (
           <span
-            className="text-[9px] leading-tight text-amber-200/95 bg-black/55 px-1.5 py-0.5 rounded border border-amber-500/30 truncate max-w-[115px]"
+            className="text-[9px] leading-tight text-amber-200/95 bg-black/55 px-1 sm:px-1.5 py-0.5 rounded border border-amber-500/30 truncate max-w-[85px] sm:max-w-[115px]"
             title={eff.specialText}
           >
             {eff.specialText}
@@ -588,12 +588,14 @@ const CardSleeveView = ({
           onSleeveClick(sleeve.sleeveId);
         }
       }}
-      className={`relative rounded-xl border-2 overflow-hidden flex flex-col bg-stone-900/90 shadow-lg transition-all ${
-        compact ? 'w-44 h-44' : 'w-52 h-52'
+      className={`relative rounded-xl border-2 overflow-hidden flex flex-col bg-stone-900/95 shadow-lg transition-all ${
+        compact
+          ? 'w-[140px] h-[190px] sm:w-[155px] sm:h-[210px]'
+          : 'w-full max-w-[185px] h-[215px] sm:h-[240px]'
       } ${
         canAcceptSelected
           ? 'border-emerald-400 ring-2 ring-emerald-400/50 cursor-pointer hover:scale-105'
-          : 'border-stone-700/80'
+          : 'border-stone-700/80 hover:border-stone-600'
       } ${animationClass}`}
     >
       {badgeText && (
@@ -1538,14 +1540,14 @@ export default function App() {
             </div>
 
             {}
-            <div className={`flex flex-wrap items-start gap-3 ${humanPlayer.hasSpoiled ? 'animate-mv-spoil' : ''}`}>
+            <div className={`flex flex-col md:flex-row items-start gap-3.5 ${humanPlayer.hasSpoiled ? 'animate-mv-spoil' : ''}`}>
               {/* ON-DECK CARD ZONE */}
-              <div className="flex flex-col items-center">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-1 flex items-center gap-1">
-                  <Eye className="w-3 h-3" /> On-Deck Preview
+              <div className="flex flex-col items-center shrink-0 w-full md:w-auto p-2 sm:p-2.5 rounded-xl bg-stone-950/40 border border-amber-500/20">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-1.5 flex items-center gap-1">
+                  <Eye className="w-3 h-3 text-amber-300" /> On-Deck Preview
                 </span>
                 {humanPlayer.onDeck ? (
-                  <div key={`ondeck_${humanPlayer.onDeck.sleeveId}_${onDeckAnimKey}`} className="relative">
+                  <div key={`ondeck_${humanPlayer.onDeck.sleeveId}_${onDeckAnimKey}`} className="relative w-full flex justify-center">
                     <CardSleeveView
                       sleeve={humanPlayer.onDeck}
                       badgeText="ON-DECK"
@@ -1554,47 +1556,58 @@ export default function App() {
                     {phase === 'HARVEST' && (
                       <div className="absolute inset-0 bg-stone-950/65 backdrop-blur-[1px] rounded-xl flex items-center justify-center p-3 text-center">
                         <span className="text-[11px] text-stone-300 font-medium">
-                          Stays on top of your deck for next turn
+                          Stays on top of deck for next turn
                         </span>
                       </div>
                     )}
                   </div>
                 ) : (
-                  <div className="w-52 h-52 rounded-xl border-2 border-dashed border-stone-800 flex items-center justify-center text-xs text-stone-500">
+                  <div className="w-[145px] sm:w-[175px] h-[215px] sm:h-[240px] rounded-xl border-2 border-dashed border-stone-800 flex items-center justify-center text-xs text-stone-500 text-center p-3">
                     Deck Empty
                   </div>
                 )}
               </div>
 
-              <div className="hidden sm:block w-px self-stretch bg-stone-800 mx-1" />
+              <div className="hidden md:block w-px self-stretch bg-stone-800/80 mx-0.5" />
 
               {/* PLANTED FIELD CARDS */}
-              <div className="flex-1 flex flex-wrap gap-3">
-                {humanPlayer.field.map((card, i) => {
-                  const isNewlyPushed = card.sleeveId === lastPushedCardId;
-                  return (
-                    <div
-                      key={`${card.sleeveId}_${isNewlyPushed ? 'pushed' : dealBatchId}`}
-                      className="flex flex-col items-center"
-                    >
-                      <span className="text-[10px] font-mono text-stone-400 mb-1 flex items-center gap-1">
-                        <span>Field #{i + 1}</span>
-                        {isNewlyPushed && (
-                          <span className="px-1 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[9px] font-bold">
-                            PUSHED
+              <div className="flex-1 w-full">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1.5 flex items-center gap-1">
+                  <Sprout className="w-3 h-3 text-emerald-300" /> Planted Field ({humanPlayer.field.length} Cards)
+                </div>
+                {humanPlayer.field.length === 0 ? (
+                  <div className="p-8 text-center text-xs text-stone-500 border border-dashed border-stone-800 rounded-xl">
+                    No cards in field yet.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 sm:gap-3 justify-items-center">
+                    {humanPlayer.field.map((card, i) => {
+                      const isNewlyPushed = card.sleeveId === lastPushedCardId;
+                      return (
+                        <div
+                          key={`${card.sleeveId}_${isNewlyPushed ? 'pushed' : dealBatchId}`}
+                          className="flex flex-col items-center w-full max-w-[185px]"
+                        >
+                          <span className="text-[10px] font-mono text-stone-400 mb-1 flex items-center gap-1">
+                            <span>Field #{i + 1}</span>
+                            {isNewlyPushed && (
+                              <span className="px-1 rounded bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[9px] font-bold">
+                                PUSHED
+                              </span>
+                            )}
                           </span>
-                        )}
-                      </span>
-                      <CardSleeveView
-                        sleeve={card}
-                        selectedAdvancement={selectedAdvancement?.slice || null}
-                        onSleeveClick={handleSleeveCardInField}
-                        animationClass={isNewlyPushed ? 'animate-mv-push' : 'animate-mv-deal'}
-                        animationDelayMs={isNewlyPushed ? 0 : i * 110}
-                      />
-                    </div>
-                  );
-                })}
+                          <CardSleeveView
+                            sleeve={card}
+                            selectedAdvancement={selectedAdvancement?.slice || null}
+                            onSleeveClick={handleSleeveCardInField}
+                            animationClass={isNewlyPushed ? 'animate-mv-push' : 'animate-mv-deal'}
+                            animationDelayMs={isNewlyPushed ? 0 : i * 110}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -1809,7 +1822,7 @@ export default function App() {
                 Close
               </button>
             </div>
-            <div className="p-4 overflow-y-auto flex flex-wrap justify-center gap-3">
+            <div className="p-4 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-3 justify-items-center">
               {[
                 ...humanPlayer.field.map((c) => ({ c, zone: 'IN FIELD' })),
                 ...(humanPlayer.onDeck ? [{ c: humanPlayer.onDeck, zone: 'ON-DECK' }] : []),
@@ -1846,20 +1859,22 @@ export default function App() {
                 Close
               </button>
             </div>
-            <div className="p-4 overflow-y-auto flex flex-wrap justify-center gap-3">
+            <div className="p-4 overflow-y-auto">
               {humanPlayer.discard.length === 0 ? (
                 <div className="py-12 text-center text-sm text-stone-500">
                   Your Discard Pile is currently empty.
                 </div>
               ) : (
-                humanPlayer.discard.map((c, idx) => (
-                  <CardSleeveView
-                    key={c.sleeveId}
-                    sleeve={c}
-                    badgeText={`DISCARD #${idx + 1}`}
-                    compact
-                  />
-                ))
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-3 justify-items-center">
+                  {humanPlayer.discard.map((c, idx) => (
+                    <CardSleeveView
+                      key={c.sleeveId}
+                      sleeve={c}
+                      badgeText={`DISCARD #${idx + 1}`}
+                      compact
+                    />
+                  ))}
+                </div>
               )}
             </div>
           </div>
