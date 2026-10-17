@@ -1402,7 +1402,7 @@ export default function App() {
   const aiTotalVP = calculateTotalEndGameVP(aiPlayer);
 
   return (
-    <div className={`min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans select-none overflow-x-hidden ${isSpoilShaking ? 'animate-mv-spoil' : ''}`}>
+    <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans select-none overflow-x-hidden">
       {}
       <style>{`
         @keyframes mvDealCard {
@@ -1472,11 +1472,6 @@ export default function App() {
           animation: mvSpoilShake 0.72s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
         }
       `}</style>
-
-      {/* RED FLASH & VIGNETTE ON SPOIL */}
-      {isSpoilShaking && (
-        <div className="fixed inset-0 pointer-events-none z-50 ring-8 ring-inset ring-red-600 bg-red-950/30 animate-pulse transition-opacity duration-700" />
-      )}
 
       {/* TOP HEADER BAR */}
       <header className="game-header bg-stone-900 border-b border-stone-800 px-3 sm:px-6 2xl:px-8 py-1 md:py-2 flex flex-wrap items-center justify-between gap-2 w-full">
@@ -1899,7 +1894,13 @@ export default function App() {
         {/* ========================================================= */}
         {/* TIER 3: YOUR SANCTUARY FIELD (BOTTOM DIGITAL BOARD)       */}
         {/* ========================================================= */}
-        <section className="game-section game-sanctuary-field bg-stone-900/80 border border-stone-800/90 rounded-xl md:rounded-2xl p-1.5 sm:p-2 md:p-4 flex flex-col gap-1.5 md:gap-3 shadow-xl backdrop-blur-sm w-full">
+        <section className={`relative game-section game-sanctuary-field bg-stone-900/80 border border-stone-800/90 rounded-xl md:rounded-2xl p-1.5 sm:p-2 md:p-4 flex flex-col gap-1.5 md:gap-3 shadow-xl backdrop-blur-sm w-full transition-all ${
+          isSpoilShaking ? 'animate-mv-spoil ring-4 ring-red-500/90 shadow-red-950/80' : ''
+        }`}>
+          {/* LOCALIZED RED SPOIL FLASH & VIGNETTE ON SANCTUARY FIELD */}
+          {isSpoilShaking && (
+            <div className="absolute inset-0 pointer-events-none z-40 rounded-xl md:rounded-2xl ring-4 ring-inset ring-red-500 bg-red-950/40 animate-pulse transition-opacity duration-700" />
+          )}
           {/* Header Row */}
           <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-stone-800 pb-1.5 px-0.5 md:px-1">
             <div className="flex items-center gap-1.5 md:gap-2">
